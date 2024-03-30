@@ -1,0 +1,124 @@
+h1 {
+	color: var(--primary);
+	font-size: 4em;
+	margin-bottom: 10vh;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2.5em;
+	font-weight:normal;
+	color: var(--primary);
+}
+
+a {
+	align-self: center;
+}
+
+p {
+	font-size: 1.2em;
+	color: dimgrey;
+}
+
+form {
+	margin-top: 2vh;
+}
+
+form > input {
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 30px;
+  	font-size: 1.2em;
+  	padding: 15px 20px 15px 25px;
+  	margin: 0vh 0 2vh 0;
+}
+
+button {
+	color: whitesmoke;
+	background-color: var(--primary);
+	box-sizing:border-box;
+	border: none;
+	border-radius: 30em;
+	padding: 15px 20px 15px 20px;
+	font-size: 1.2em;
+	margin: 0 auto 0 auto;
+	width: 100%;
+}
+button:hover {
+	background-color: var(--compliment-pink);
+	box-shadow: -8px 5px 4px black;
+	text-shadow: 0px 0px 1px black;
+	transform: scale(1);
+	transition: all .5s ease;
+}
+
+#secondaryh2{
+	color: var(--primary-oof);
+}
+
+.flex-container-3-2 {
+ 	display: grid;  
+ 	grid-template-columns: 3fr 2fr;
+  	width: 100vw;
+}
+
+.flex-container-1-1-1-1 {
+	display: grid;  
+ 	grid-template-columns: 1fr 1fr 1fr 1fr;
+ 	margin-bottom: 3vh;
+}
+
+#col1 {
+	width: 45vw;
+	margin: 0 auto 0 auto;
+}
+
+#message {
+	display: none;
+	font-size: 1.3em;
+	color: red;
+	text-align: center;
+	margin-top: 1vh;
+}
+
+#front-img {
+	position:relative;
+	right: 180px;
+	height: 100vh;	
+}
+
+#img-container {
+	border-radius: 30px;
+	overflow:hidden;
+	height: 96vh;
+	width: 38vw;
+	margin: auto
+}
+
+#signinbutton {
+	width: 35%;
+}
+
+#signupa {
+	color: var(--compliment-pink);
+	font-size: 1.2em;
+	margin: 1vh 0 1vh 0;
+}
+#signupa:hover {
+	text-shadow: 0px 0px 1px black;
+	transform: scale(1);
+	transition: all .5s ease;
+}
+
+#guesta {
+	color: var(--primary-oof);
+	font-size: 1.1em;
+	margin-top: 8vh;
+}
+#guesta:hover {
+	text-shadow: 0px 0px 1px black;
+	transform: scale(1);
+	transition: all .5s ease;
+}
+

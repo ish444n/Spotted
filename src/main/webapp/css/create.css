@@ -1,0 +1,151 @@
+#createForm h1 {
+	font-size: 2.0em;
+	font-weight: 500;
+	text-align: center;
+	color: var(--compliment-muted);
+}
+
+.container-1-1 {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	margin: 0 30vw 0 40vw;
+}
+
+form {
+	display: grid;
+}
+
+#you-searched {
+	display: flex;	
+	position: absolute;
+	flex-direction: row;
+	height: 6vh;
+	width: 70vw;
+	margin: 23vh 15vw 0 15vw;
+}
+
+#ys-you {
+	text-align: right;
+	font-size: 1.5em;
+	font-weight: 400;
+	color: rgb(40,40,40);
+}
+
+#ys-prompt {
+	text-align: left;
+	font-size: 1.3em;
+	color: lightgrey;
+	margin-left: 3vw;
+}
+
+#create-message {
+	margin-top: 3vh;
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: 300;
+}
+
+#output{
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	height: 65vh;
+	width: 80vw;
+	margin: 30vh 10vw 0 10vw;
+  	white-space: nowrap; /* Prevents items from wrapping to the next line */
+  	overflow-x: auto;    /* Enable horizontal scrolling */
+  	border-top: 1px solid lightslategrey;
+  	border-bottom: 1px solid lightslategray;
+  	box-shadow: 0px -10px 10px -10px black,
+  				0px  10px 10px -10px black;
+  	padding: 10px;
+}
+#output::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+#output::-webkit-scrollbar-thumb {
+  background-color: whitesmoke;
+  border-radius: 6px;
+  border: 3px solid rgba(0, 0, 0, 0);
+}
+
+
+#output > * {
+	height: 90px;
+}
+
+
+#createForm {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	justify-self: center;
+	justify-content: center;
+	width: 100vw;
+	
+}
+
+#createForm input[type=text] {
+	width: 60%;
+	color: white;
+	box-sizing: border-box;
+	align-self: center;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-color: rgba(0, 0, 0, 0);
+	border-radius: 30px;
+  	font-size: 1.2em;
+  	padding: 15px 20px 15px 25px;
+  	margin: 4vh auto 2vh auto;
+}
+
+#createForm input[type=checkbox] {
+    position: relative;
+	cursor: pointer;
+	margin-top: 2vh;
+}
+
+#createForm input[type=checkbox]:before {
+     content: "";
+     display: block;
+     position: absolute;
+     width: 16px;
+     height: 16px;
+     top: 0;
+     left: 0;
+     border: 2px solid #555555;
+     border-radius: 3px;
+     background-color: white;
+}
+#createForm input[type=checkbox]:checked:after {
+     content: "";
+     display: block;
+     width: 5px;
+     height: 10px;
+     border: solid black;
+     border-width: 0 2px 2px 0;
+     -webkit-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     transform: rotate(45deg);
+     position: absolute;
+     top: 2px;
+     left: 6px;
+}
+
+#searchbtn{
+	color: whitesmoke;
+	background-color: var(--primary);
+	box-sizing:border-box;
+	border: none;
+	border-radius: 30em;
+	padding: 15px 20px 15px 20px;
+	font-size: 1.2em;
+	margin: 5vh auto 0 auto;
+	align-self: center;
+	width: 15%;
+}
+
+
+#createForm label {
+	font-size: 1.4em;
+	color: var(--compliment-muted);
+}

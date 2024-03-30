@@ -1,0 +1,90 @@
+
+.flex-container-1-1-1 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-items: center;
+	align-self: center;
+	align-content: center;
+	height: 100%;
+	width: 95%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	
+}
+
+.card {
+	display: grid;
+	background-color: lightgrey;
+	border-radius: 40px;
+	height: fit-content;
+	width: 24vw;
+	padding: 5vh 2vw 5vh 2vw;
+	align-self: center;
+	justify-content: center;
+	transition: all .5s ease;
+
+}
+.card:hover {
+	width: 26vw;
+	padding-left: 3.6vh;
+	padding-right: 3.6vh;
+	box-shadow: -9px 6px 4px black ;
+	transform: scale(1);
+	transition: all .5s ease;
+	>h1 {
+		font-size: 2.8em;
+		transform: scale(1);
+		transition: all .5s ease;
+	}
+	>p {
+		font-size: 1.5em;
+		transform: scale(1);
+		transition: all .5s ease;
+	}
+	>button {
+		font-size: 1.5em;
+		transform: scale(1);
+		transition: all .5s ease;
+	}
+}
+
+.card h1 {
+	font-size: 2.5em;
+	font-weight: 400;
+	text-align: center;
+	color: rgb(52, 52, 52);
+	transition: all .5s ease;
+	margin-bottom: 3vh;
+}
+
+.card p {
+	font-size: 1.3em;
+	text-align: center;
+	color: rgb(55, 55, 55);
+	padding-bottom: 3vh;
+	transition: all .5s ease;
+}
+
+.card button {
+	color: whitesmoke;
+	background-color: var(--primary);
+	box-sizing:border-box;
+	border: none;
+	border-radius: 30em;
+	padding: 15px 20px 15px 20px;
+	font-size: 1.2em;
+	width: 100%;
+	transition: all .5s ease;
+}
+.card button:hover {
+	background-color: var(--compliment-pink);
+	box-shadow: -8px 5px 4px black;
+	text-shadow: 0px 0px 1px black;
+	transform: scale(1);
+	transition: all .5s ease;
+}
+
+.card a {
+	width: 50%;
+	justify-self: center;
+}

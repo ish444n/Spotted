@@ -1,0 +1,30 @@
+.container-1-4-1 {
+	display: grid;
+	grid-template-columns: 1fr 4fr 1fr;
+	width: 100vw;
+	padding: 4vh 10vw 4vh 10vw;
+	height: 15vh;
+}
+
+h2 {
+	font-size: 2.0em;
+	font-weight:normal;
+	color: rgb(50, 50,50);
+	text-align: start;
+	align-self: self-start;
+	justify-self: start;
+}
+
+#term {
+	font-size: 1.6em;
+	color: lightgray;
+}
+
+#results {
+	width: 80vw;
+	height: 60vh;
+	margin: 0vh 10vw 2vh 10vw;
+	border-top:solid 2px white;
+	border-bottom:solid 2px white;
+
+}

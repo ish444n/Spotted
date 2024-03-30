@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Emotify - Login</title>
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<script src="../js/login.js"></script>
+</head>
+<body>	
+	<div id="body">
+		<div class="flex-container-3-2">
+			<div class="col" id = "col1">
+				<h1>Emotify</h1>
+				<div class="flex-container-1-1-1-1">
+					<h2>Sign In</h2>
+					<h2 id="secondaryh2">Sign Up</h2>
+				</div>
+				<p>Let's get started!</p>
+				<form>
+					<input type="text" id = "username" name="username" placeholder="Username" autocomplete="username">
+					<input type="password" id = "password" name="password" placeholder="Password" autocomplete="current-password">
+				</form>
+				<a onclick="signIn(event)" id="signinbutton"><button>Sign In</button></a>
+				<p id="message">Invalid Credentials. Please try again.</p>
+				<p style="text-align: center; margin-top: 2vh;">or</p>
+				<a id="signupa" onclick="signUp()">Sign Up</a>
+				<a id="guesta" onclick="asGuest()">Continue as Guest</a>
+			</div>
+			<div class="col">
+				<div id="img-container">
+					<img id="front-img" src="../assets/webpagefront.png">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

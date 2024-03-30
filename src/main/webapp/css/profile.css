@@ -1,0 +1,16 @@
+.username, .email {
+	color:  #1DB954;
+	font-size: 60px;
+	font-family: Calibri;
+	display: block;
+	margin-bottom: 50px;
+}
+
+.username {
+	padding-top: 300px;
+}
+
+.user_data {
+	text-align: center;
+	
+}
