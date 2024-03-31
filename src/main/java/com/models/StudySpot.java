@@ -23,14 +23,11 @@ public class StudySpot {
     }
     
     // servlet
-    /*
     public void addReview(Review r) {
     	reviews.add(r);
     	updateAvgRating(true);
     }
-    */
     
-    // servlet class should call this with true
     public void updateAvgRating(boolean isUpdate) {
     	
     	if (isUpdate && reviews.size() != 1) 

@@ -14,7 +14,6 @@ public class User {
         this.password = password;
         this.userBio = userBio;
     }
-	
 	/*
 	// servlet
 	public void writeReview(Review review, StudySpot s) {
@@ -50,8 +49,8 @@ public class User {
 			userLibrary.dontWantToGo(spot);
 		}
 	}
-	*/
 	
+	*/
 	public int getUserID() {
         return userID;
     }

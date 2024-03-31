@@ -52,8 +52,7 @@ public class UserLibrary {
     public void dontWantToGo(StudySpot spot) {
         wantToGoSpots.remove(spot);
     }
-	*/
-    
+    */
     // Getters 
     public List<StudySpot> getVisitedSpots() {
         return visitedSpots;

@@ -4,7 +4,8 @@ import java.util.Map;
 
 public class StudySpotScoreCalculator {
 	private Map<String, Integer> maxAmenityValues;
-
+	
+	// In servlet, query for max values of amenities: waterFountains, restrooms, microwaves, refrigerators, outlets, AC
 	public StudySpotScoreCalculator(Map<String, Integer> maxAmenityValues) {
         this.maxAmenityValues = maxAmenityValues;
 	}
@@ -68,7 +69,7 @@ public class StudySpotScoreCalculator {
 		comfort_score += normalizeValueLogScale(spot.getSpecs().getWaterFountains(),maxAmenityValues.get("refrigerators"));
 		comfort_score += normalizeValueLogScale(spot.getSpecs().getWaterFountains(),maxAmenityValues.get("outlets"));
 		comfort_score += normalizeValueLogScale(spot.getSpecs().getWaterFountains(),maxAmenityValues.get("AC"));
-		comfort_score += normalizeSeatingCapacityBasedOnPreference(userPrefs.getPreferredStudySpaceSize(),maxAmenityValues.get("SeatingCapacity"));
+		comfort_score += normalizeSeatingCapacityBasedOnPreference(userPrefs.getPreferredStudySpaceSize(), spot.getSpecs().getSeatingCapacity());
 		
 		return comfort_score/7.0;
 	}

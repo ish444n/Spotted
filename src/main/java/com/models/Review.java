@@ -17,7 +17,7 @@ public class Review {
     public double getStarRating () {
     	return starRating;
     }
-    
+    /*
     public void setDetail () {
     	
     }
@@ -25,4 +25,5 @@ public class Review {
     public void setStarRating () {
     	
     }
+    */
 }
