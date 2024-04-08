@@ -28,7 +28,7 @@ public class SignUpServlet extends HttpServlet {
         
         try {
         	// TODO: WRITE THE DATABASE UTILS CLASS
-            conn = DatabaseUtils.getConnection(); // !! PSUEDOCODE
+            conn = StudySpotsDAO.getConnection(); // !! PSUEDOCODE
             
             // check if the username or email is already in use
             String checkSql = "SELECT COUNT(*) AS userCount FROM User WHERE Username = ? OR Email = ?";

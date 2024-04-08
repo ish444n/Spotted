@@ -26,7 +26,7 @@ public class SignInServlet extends HttpServlet {
         
         // TODO: WRITE THE DATABASE UTILS
         try {
-	        conn = DatabaseUtils.getConnection(); // !!! PSEUDOCODE
+	        conn = StudySpotsDAO.getConnection();
 	
 	        // build statement
 	        String sql = "SELECT * FROM User WHERE Username = ? AND Password = ?";

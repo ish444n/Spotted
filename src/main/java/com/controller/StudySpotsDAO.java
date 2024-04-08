@@ -7,13 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class StudySpotsDAO {
+	
+	// Database Connection URL
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/StudySpots?user=root&password=root";
     
-    // Database connection URL
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/StudySpots?user=root&password=root";
+    // Returns the Database Connection object
+	public static Connection getConnection() throws SQLException {
+		Connection conn = DriverManager.getConnection(DB_URL);
+		return conn;
+	}
 
     // Method to print the contents of the ReviewTable
     public static void printReviews() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM ReviewTable")) {
             
@@ -34,7 +40,7 @@ public class StudySpotsDAO {
 
     // Method to print the contents of the UserTable
     public static void printUsers() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM UserTable")) {
             
@@ -56,7 +62,7 @@ public class StudySpotsDAO {
 
     // Method to print the contents of the SpecsTable
     public static void printSpecs() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM SpecsTable")) {
             
@@ -82,7 +88,7 @@ public class StudySpotsDAO {
 
     // Method to print the contents of the ImagesTable
     public static void printImages() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM ImagesTable")) {
             
@@ -103,7 +109,7 @@ public class StudySpotsDAO {
 
     // Method to print the contents of the StudySpotsTable
     public static void printStudySpots() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM StudySpotsTable")) {
             
