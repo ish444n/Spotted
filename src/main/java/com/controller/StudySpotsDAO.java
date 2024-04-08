@@ -13,8 +13,14 @@ public class StudySpotsDAO {
     
     // Returns the Database Connection object
 	public static Connection getConnection() throws SQLException {
-		Connection conn = DriverManager.getConnection(DB_URL);
-		return conn;
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
+			return conn;
+		} catch(SQLException sqle) {
+			System.out.println("Fatal! Error in connecting to DataBase!");
+			System.out.println(sqle.getMessage());
+			throw sqle;
+		}
 	}
 
     // Method to print the contents of the ReviewTable
