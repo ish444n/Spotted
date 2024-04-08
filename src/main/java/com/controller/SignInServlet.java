@@ -34,7 +34,7 @@ public class SignInServlet extends HttpServlet {
 	        conn = StudySpotsDAO.getConnection();
 	
 	        // build statement
-	        String sql = "SELECT * FROM User WHERE Username = ? AND Password = ?";
+	        String sql = "SELECT * FROM UserTable WHERE Username = ? AND Password = ?";
 	        stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, username);
 	        stmt.setString(2, password);
