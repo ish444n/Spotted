@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/SignUpServlet")
+@WebServlet("/SignUp")
 public class SignUpServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // receives username, password, and email
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // get the info from the form
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -27,11 +28,12 @@ public class SignUpServlet extends HttpServlet {
         ResultSet rs = null;
         
         try {
-        	// TODO: WRITE THE DATABASE UTILS CLASS
-            conn = StudySpotsDAO.getConnection(); // !! PSUEDOCODE
+        	// get connection
+            conn = StudySpotsDAO.getConnection();
+            conn.setAutoCommit(false); // start transaction
             
             // check if the username or email is already in use
-            String checkSql = "SELECT COUNT(*) AS userCount FROM User WHERE Username = ? OR Email = ?";
+            String checkSql = "SELECT COUNT(*) AS userCount FROM UserTable WHERE Username = ? OR Email = ?";
             checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setString(1, username);
             checkStmt.setString(2, email);
@@ -39,38 +41,44 @@ public class SignUpServlet extends HttpServlet {
             rs = checkStmt.executeQuery();
             if (rs.next() && rs.getInt("userCount") > 0) {
                 // user already exists within db
-                // TODO: WRITE LOGIC FOR DUPLICATE USERS
-                
+            	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);    
+	            response.getWriter().write("Username or email already in use.");
             } else {
                 // insert new user into the table
-                String insertSql = "INSERT INTO User (Username, Email, Password) VALUES (?, ?, ?)";
+                String insertSql = "INSERT INTO UserTable (Username, Email, Password) VALUES (?, ?, ?)";
                 insertStmt = conn.prepareStatement(insertSql);
                 insertStmt.setString(1, username);
                 insertStmt.setString(2, email);
                 insertStmt.setString(3, password);
 
-                
+                // send success / failure back to the client
                 int rowsAffected = insertStmt.executeUpdate();
                 if (rowsAffected > 0) {
                 	// sign up went well
-                    // TODO: Redirect to login page on successful sign up
+                	conn.commit(); // commit the transaction
+                	response.setStatus(HttpServletResponse.SC_OK);    
+    	            response.getWriter().write("Sign up successful");
                 } else {
-                	// sign up failed
-                    // TODO: Process failed sign up attempt
+                	// sign up failed -- send unauthorized and undo changes
+                	conn.rollback();
+                	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);    
+    	            response.getWriter().write("Registration error");
                 }
             }
         } catch (Exception e) {
+        	try {
+                if (conn != null) conn.rollback(); // Ensure rollback on exception
+            } catch (Exception rollbackEx) {
+                e.addSuppressed(rollbackEx);
+            }
             throw new ServletException("Registration error", e);
         } finally {
             // close resources
-            try {
-                if (rs != null) rs.close();
-                if (checkStmt != null) checkStmt.close();
-                if (insertStmt != null) insertStmt.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        	// Close resources
+            try { if (rs != null) rs.close(); } catch (Exception e) { e.printStackTrace(); }
+            try { if (checkStmt != null) checkStmt.close(); } catch (Exception e) { e.printStackTrace(); }
+            try { if (insertStmt != null) insertStmt.close(); } catch (Exception e) { e.printStackTrace(); }
+            try { if (conn != null) conn.close(); } catch (Exception e) { e.printStackTrace(); }
         }
     }
 }
