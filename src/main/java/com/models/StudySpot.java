@@ -1,4 +1,5 @@
-import java.awt.Image;
+package com.models;
+
 import java.util.List;
 
 public class StudySpot {
