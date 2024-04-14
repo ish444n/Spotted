@@ -1,56 +1,39 @@
+import java.util.List;
+
+import com.google.gson.Gson;
 
 public class User {
 	private int userID;
 	private String username;
 	private String email;
 	private String password;
-	private UserLibrary userLibrary;
+	private List<StudySpot> bookmarkedSpots;
 	private String userBio;
 
-	public User(int userID, String username, String email, String password, String userBio) {
+	public User(int userID, String username, String email, String password, String userBio, List<StudySpot> bookmarkedSpots) {
         this.userID = userID;
         this.username = username;
         this.email = email;
         this.password = password;
         this.userBio = userBio;
+        this.bookmarkedSpots = bookmarkedSpots;
     }
-	/*
-	// servlet
-	public void writeReview(Review review, StudySpot s) {
-		s.addReview(review);
+	
+	public String toJson() {
+        // Create a Gson object
+        Gson gson = new Gson();
+
+        // Convert the User object to JSON format
+        String json = gson.toJson(this);
+
+        // Write JSON to a file
+        return json;
+    }
+	
+	public List<StudySpot> getBookmarkedSpots () {
+		return bookmarkedSpots;
 	}
 	
-	// servlet in UserLibrary
-	public void updateVisitedSpots(StudySpot spot, boolean flag) {
-		if (flag) {
-			userLibrary.markVisited(spot);
-		}
-		else {
-			userLibrary.unVisit(spot);
-		}
-	}
-	
-	// servlet in UserLibrary
-	public void updateFavoritedSpots(StudySpot spot, boolean flag) {
-		if (flag) {
-			userLibrary.addFavorite(spot);
-		}
-		else {
-			userLibrary.unFavorite(spot);
-		}
-	}
-	
-	// servlet in UserLibrary
-	public void updateWantToGo(StudySpot spot, boolean flag) {
-		if (flag) {
-			userLibrary.wantToGo(spot);
-		}
-		else {
-			userLibrary.dontWantToGo(spot);
-		}
-	}
-	
-	*/
 	public int getUserID() {
         return userID;
     }
@@ -65,10 +48,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public UserLibrary getUserLibrary() {
-        return userLibrary;
     }
     
     public String getUserBio () {

@@ -1,3 +1,4 @@
+package com.models;
 
 public class Review {
 	private int reviewID;
