@@ -19,12 +19,12 @@ public class User {
         this.bookmarkedSpots = bookmarkedSpots;
     }
 	
-	public static String serializeUserToJsonFile(User user, String filePath) {
+	public String toJson() {
         // Create a Gson object
         Gson gson = new Gson();
 
         // Convert the User object to JSON format
-        String json = gson.toJson(user);
+        String json = gson.toJson(this);
 
         // Write JSON to a file
         return json;
