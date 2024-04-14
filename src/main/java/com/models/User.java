@@ -1,5 +1,7 @@
 import java.util.List;
 
+import com.google.gson.Gson;
+
 public class User {
 	private int userID;
 	private String username;
@@ -15,6 +17,17 @@ public class User {
         this.password = password;
         this.userBio = userBio;
         this.bookmarkedSpots = bookmarkedSpots;
+    }
+	
+	public static String serializeUserToJsonFile(User user, String filePath) {
+        // Create a Gson object
+        Gson gson = new Gson();
+
+        // Convert the User object to JSON format
+        String json = gson.toJson(user);
+
+        // Write JSON to a file
+        return json;
     }
 	
 	public List<StudySpot> getBookmarkedSpots () {
