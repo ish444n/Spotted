@@ -20,6 +20,7 @@ public class SignUpServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        String bio = request.getParameter("bio");
 
         // setup jdbc vars
         Connection conn = null;
@@ -45,11 +46,12 @@ public class SignUpServlet extends HttpServlet {
 	            response.getWriter().write("Username or email already in use.");
             } else {
                 // insert new user into the table
-                String insertSql = "INSERT INTO UserTable (Username, Email, Password) VALUES (?, ?, ?)";
+                String insertSql = "INSERT INTO UserTable (Username, Email, Password, Bio) VALUES (?, ?, ?, ?)";
                 insertStmt = conn.prepareStatement(insertSql);
                 insertStmt.setString(1, username);
                 insertStmt.setString(2, email);
                 insertStmt.setString(3, password);
+                insertStmt.setString(4, bio);
 
                 // send success / failure back to the client
                 int rowsAffected = insertStmt.executeUpdate();
@@ -74,7 +76,6 @@ public class SignUpServlet extends HttpServlet {
             throw new ServletException("Registration error", e);
         } finally {
             // close resources
-        	// Close resources
             try { if (rs != null) rs.close(); } catch (Exception e) { e.printStackTrace(); }
             try { if (checkStmt != null) checkStmt.close(); } catch (Exception e) { e.printStackTrace(); }
             try { if (insertStmt != null) insertStmt.close(); } catch (Exception e) { e.printStackTrace(); }
