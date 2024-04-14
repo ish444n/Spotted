@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.models.User;
+import com.models.*;
+import com.models.Image;
+
 
 // class to retrieve and update user profiles - including bio and other details
 @WebServlet("/user")
@@ -29,11 +32,17 @@ public class UserProfile extends HttpServlet {
 		if(user == null) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
-		} else {
-			// turn user into a json
-			
 		}
 		
+		// otherwise, continue making user json
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Convert the User object to JSON using GSON
+        String json = user.toJson();
+
+        // Write the JSON to the response
+        response.getWriter().write(json);
     }
 	
 	// helper function to retrieve the user from the table
@@ -46,13 +55,16 @@ public class UserProfile extends HttpServlet {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
+        // initialize the user
+        User user = null;
+        
         // get user info and check if it matches login
         try {
 	        conn = StudySpotsDAO.getConnection();
 	        
-	        // build statement
-	        String sql = "SELECT * FROM UserTable WHERE UserID = ?";
-	        stmt = conn.prepareStatement(sql);
+	        // build statement to get user info
+	        String userSql = "SELECT * FROM UserTable WHERE UserID = ?";
+	        stmt = conn.prepareStatement(userSql);
 	        stmt.setString(1, userid);
 	        
 	        // execute & get results
@@ -63,18 +75,28 @@ public class UserProfile extends HttpServlet {
 	        	String password = rs.getString("Password");
 	        	String email = rs.getString("Email");
 	        	String bio = rs.getString("Bio");
-	        	// String image = rs.get_____("Image"); not required for user rn, also not in database (04/12/2024)
-            
-	        	// build the user object and return em
-	        	User user = new User(Integer.parseInt(userid), username, email, password, bio);
-	        	return user;
-	        
-	        } else {
-            	return null;
-            }
+	        	
+	        	// we know user exists so now lets get their bookmarked spots
+	        	List<StudySpot> bookmarked = StudySpotsDAO.getUserBookmarked(userid);
+	        	
+	        	// create the user object
+	        	user = new User(Integer.parseInt(userid), username, email, password, bio, bookmarked);
+	        }
+        } catch(NumberFormatException nfe) {
+        	System.out.println("Number format exception in UserFromRequest: " + nfe.getMessage());
         } catch (SQLException sqle) {
         	System.out.println("Error while getting user details: " + sqle.getMessage());
-        	return null;
+        } finally { 
+        	// close resources 
+        	try {
+                if (rs != null) rs.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        
+        // return the user
+        return user;
 	}
 }

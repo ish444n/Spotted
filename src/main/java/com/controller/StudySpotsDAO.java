@@ -2,9 +2,14 @@ package com.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Vector;
+
+import com.models.*;
 
 public class StudySpotsDAO {
 	
@@ -21,6 +26,99 @@ public class StudySpotsDAO {
 			System.out.println(sqle.getMessage());
 			throw sqle;
 		}
+	}
+	
+	// gets all bookmarked studySpots for a given userID
+	public static List<StudySpot> getUserBookmarked(String userID) {
+	    List<StudySpot> bookmarkedSpots = new Vector<StudySpot>();
+	    
+	    // set JDBC vars
+	    Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        conn = getConnection();
+	        String sql = "SELECT s.LocationID, s.Name, s.Description, s.SpecID " +
+	                     "FROM StudySpotsTable s " +
+	                     "JOIN BookmarkedSpots b ON s.LocationID = b.LocationID " +
+	                     "WHERE b.UserID = ?";
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, userID);
+	        
+	        // execute & get results
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            // get the study spot params to build the study spot
+	            int locationID = rs.getInt("LocationID");
+	            String name = rs.getString("Name");
+	            String description = rs.getString("Description");
+	            int specID = rs.getInt("SpecID");
+	            
+	            // Retrieve specifications, reviews, and pictures for the study spot
+	            Specification specs = getSpecifications(specID); 
+	            List<Review> reviews = getReviews(locationID); 
+	            List<Image> pictures = getStudySpotImages(locationID);
+	            
+	            // Assuming that you have a constructor in your StudySpot class like StudySpot(int locationID, String name, String description, Specification specs, List<Review> reviews, List<Image> pictures)
+	            StudySpot spot = new StudySpot(locationID, name, description, specs, reviews, pictures);
+	            bookmarkedSpots.add(spot);
+	        }	
+	    } catch (SQLException e) {
+	        System.out.println("Error in connecting to database.");
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (stmt != null) stmt.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return bookmarkedSpots;
+	}
+
+	// given a studySpotID, returns the list of all images
+	public static List<Image> getStudySpotImages(int locationID) {
+		List<Image> images = new Vector<Image>();
+		
+		// set JDBC vars
+		Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+	        String sql = "SELECT * FROM ImagesTable WHERE LocationID = ?";
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setInt(1, locationID);
+	        
+	        // execute & get results
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	// get image information
+	        	String imagePath = rs.getString("ImagePath");
+	        	String imageID = rs.getString("ImageID");
+	        	
+	        	// create image from the details and add it to the going list
+	        	Image currImage = new Image(imagePath, Integer.parseInt(imageID), locationID);
+	        	images.add(currImage);
+	        }
+		} catch (NumberFormatException nfe){
+			System.out.println("NumberFormatException in getStudySpotImages: " + nfe.getMessage());
+		} catch (SQLException e) {
+			System.out.println("Error in connecting to database.");
+			e.printStackTrace();
+		} finally {
+			try {
+                if (rs != null) rs.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+		}
+		return images;
 	}
 
     // Method to print the contents of the ReviewTable
@@ -42,6 +140,67 @@ public class StudySpotsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    // returns a list of specifications for a given specID
+    public static Specification getSpecifications(int specID) {
+        Specification specs = null;
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM SpecsTable WHERE SpecID = ?")) {
+            
+            stmt.setInt(1, specID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int waterFountains = rs.getInt("waterFountain");
+                    int restrooms = rs.getInt("restroom");
+                    int microwaves = rs.getInt("Microwaves");
+                    int refrigerators = rs.getInt("refrigerators");
+                    int outlets = rs.getInt("outlets");
+                    int AC = rs.getInt("AC");
+                    int WiFi = rs.getInt("WiFi");
+                    int SeatingCapacity = rs.getInt("SeatingCapacity");
+                    int noiseLevel = rs.getInt("noiseLevel");
+                    String openingHours = rs.getString("openingHours"); // This column must exist in your SpecsTable
+
+                    specs = new Specification(specID, waterFountains, restrooms, microwaves, refrigerators, outlets, AC, WiFi, SeatingCapacity, noiseLevel, openingHours);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException in getSpecifications: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return specs;
+    }
+
+    
+    // returns the list of reviews for a study spot given a locationID
+    public static List<Review> getReviews(int locationID) {
+        List<Review> reviews = new Vector<Review>();
+
+        // open connection
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ReviewTable WHERE LocationID = ?")) {
+            
+            stmt.setInt(1, locationID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int reviewID = rs.getInt("ReviewID");
+                    int userID = rs.getInt("UserID");
+                    double starRating = rs.getDouble("StarRating");
+                    String details = rs.getString("Details");
+
+                    Review review = new Review(reviewID, userID, locationID, starRating, details);
+                    reviews.add(review);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException in getReviews: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return reviews;
     }
 
     // Method to print the contents of the UserTable
