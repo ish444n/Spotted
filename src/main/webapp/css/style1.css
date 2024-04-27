@@ -39,3 +39,29 @@ main {
     width: 75%;
     height: 100%;
 }
+
+header {
+	background-color: var(--primary);
+}
+
+#navbar {
+	display: flex;
+	justify-content: space-between;
+	
+}
+
+#navbar h1{
+	color: var(--secondary);
+	align-self: center;
+}
+
+#navs {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#navs a{
+	color: var(--secondary);
+	text-decoration: none;
+}
