@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotted</title>
     <link rel="stylesheet" href="../css/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <header>
@@ -16,7 +17,20 @@
     </header>
     <main>
         <aside id="sidebar">
-            <!-- search and sort with dropdown -->
+			<div id="search-container">
+				<i class="fa fa-search"></i>
+		    	<input type="text" id="search-field" placeholder="Search study spots...">
+			</div>
+		    <select id="sort-dropdown">
+		        <option value="alphabetical">Alphabetical</option>
+		        <option value="newest">Newest</option>
+		        <option value="closest">Closest</option>
+		    </select>
+		    <div id="study-spot-results">
+				<hr><h3>Leavey Basement - 4.1★</h3>
+				<hr><h3>Leavey Patio - 4.4★</h3>
+		        <!-- results will be displayed here -->
+		    </div>
         </aside>
         <section id="map-container" style="height: 100%; width: 100%;">
 			<div id="map" style="height: 100%; width: 100%;"></div>
@@ -31,5 +45,67 @@
 	</script>
 	<script src="../js/map1.js"></script>
 	<script src="../js/index1.js"></script>
+	
+	<div id="create-container">
+	</div>
+	
+	
+	<div id="details-container">
+		<span id="close-details">Close</span>
+		<div id="details-header">
+			<h2 id="details-header-name">LOCATION NAME</h2>    
+			<h3 id="details-header-rating">4.8</h3>
+			<h3>★</h3>
+		</div>
+		<div id="details-pictures">
+			<div id="details-pictures-scroll-container">
+			  <img src="https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg" alt="Cinque Terre">
+			  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg" alt="Forest">
+			  <img src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0%2C176%2C3008%2C1654&wid=4000&hei=2200&scl=0.752" alt="Northern Lights">
+			  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFsPoZ5DAtC-vAsNKl8Nj86WkbAH1kDiLpdY79UD-6Ww&s" alt="Mountains">
+			  <img src="https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg" alt="Cinque Terre">
+			  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg" alt="Forest">
+			  <img src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0%2C176%2C3008%2C1654&wid=4000&hei=2200&scl=0.752" alt="Northern Lights">
+			  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFsPoZ5DAtC-vAsNKl8Nj86WkbAH1kDiLpdY79UD-6Ww&s" alt="Mountains">
+			</div>
+		</div>
+		<h2 id="details-description-title">Details:</h2>
+		<p id="details-description">Quisque nec condimentum quam. Ut vitae dignissim diam, vitae dictum turpis. Nulla facilisi. Praesent vitae quam ac dui scelerisque ultrices eget a elit. Maecenas euismod imperdiet justo vitae interdum. Nunc urna libero, scelerisque et elit vel, scelerisque placerat neque. In.</p>
+		<div id="details-specs-reviews-container">
+			<div  id='details-specs-container'>
+				<h2 id="details-specs-title">Specifications</h2>
+				<div id="details-specs">
+					<div class="details-specs-c">
+						<p>Water Fountains:</p>
+						<p>Restrooms: </p>
+						<p>Microwaves: </p>
+						<p>Refrigerators: </p>
+						<p>Outlets:</p>
+						<p>AC:</p>
+						<p>WiFi:</p>
+						<p>SeatingCapacity:</p>
+						<p>Noise Level:</p>
+						<p>Hours: </p>
+					</div>
+					<div class="details-specs-c" id="details-specs-c1">
+						<p>Yes</p>
+						<p>Yes</p>
+						<p>No</p>
+						<p>No</p>
+						<p>Yes</p>
+						<p>Yes</p>
+						<p>Yes</p>
+						<p>80</p>
+						<p>Low</p>
+						<p>10am - 12am</p>
+					</div>
+				</div>
+			</div>
+			<div id="details-reviews">
+				<h2>Reviews</h2>
+				<div id="details-reviews-data"></div> <!-- fetch data to go in here -->
+			</div>
+		</div>
+	</div>
 </body>
 </html>

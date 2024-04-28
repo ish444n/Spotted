@@ -76,7 +76,32 @@ public class StudySpot {
     public double getAvgRating() {
         return avgRating;
     }
-    
-    
 
+	public void setLocationID(int locationID) {
+		LocationID = locationID;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setSpecs(Specification specs) {
+		this.specs = specs;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public void setPictures(List<Image> pictures) {
+		this.pictures = pictures;
+	}
+
+	public void setAvgRating(double avgRating) {
+		this.avgRating = avgRating;
+	}
 }

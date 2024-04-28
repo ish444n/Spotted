@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-color: white transparent;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -18,6 +19,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: black;
 }
 
 header, footer {
@@ -30,10 +32,57 @@ main {
     height: 90%;
 }
 
+hr {
+	border: .8px solid var(--secondary-oof);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    margin-left: 10%;
+ }
+
 #sidebar {
     width: 25%;
     overflow-y: auto;
+    background-color: cornsilk;
 }
+
+#search-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#search-container i{
+    font-size: 1.6em;
+    margin-left: 5px;
+}
+
+#search-field{
+	margin: 5px;
+    padding: 3px 8px;
+    font-size: 1em;
+    width: 18vw;
+}
+
+#sort-dropdown{
+	margin: 6px;
+    padding: 3px 8px;
+    font-size: .8em;
+    width: 96%;	
+}
+
+#study-spot-results h3 {
+	font-weight: normal;
+    font-size: .8em;
+    margin-left: 10px;
+}
+
+#study-spot-results hr {
+	width: 90%;
+    margin-left: 5%;
+}
+
+
 
 #map-container {
     width: 75%;
@@ -64,4 +113,113 @@ header {
 #navs a{
 	color: var(--secondary);
 	text-decoration: none;
+}
+
+#details-container {
+	position: absolute;
+    top: 70px;
+    left: 20%;
+    width: 80%;
+    height: 90%;
+    background: wheat;
+    padding: 60px;
+    overflow: auto;
+}
+
+#details-header {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+#details-header-rating{
+	margin-left: 50px;
+}
+
+#details-pictures-scroll-container {
+	display: flex;
+	flex-direction: row;
+	
+	overflow: auto;
+	white-space: nowrap;
+	padding: 10px;
+	height: 250px;
+	
+}
+
+#details-pictures-scroll-container img {
+  padding: 10px;
+  max-height: 210px;
+
+}
+
+#details-description-title {
+	margin-top: 20px;
+	font-size: 1.2em;
+}
+
+#details-specs-reviews-container {
+	display: flex;
+	margin-top: 20px;
+    flex-direction: row;
+}
+
+#details-specs-container{
+	display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    background-color: floralwhite;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    width: 38%;
+}
+
+#details-specs-title {
+	font-size: 1.2em;
+	margin: 12px;
+	text-align: center;
+}
+
+#details-specs {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+}
+
+.details-specs-c {
+	text-align: right;
+	margin-right: 5px;
+}
+#details-specs-c1{
+	text-align: left;
+	margin-right: 20px;
+}
+
+#details-reviews {
+	display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    background-color: floralwhite;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    width: 100%;
+}
+
+#details-reviews h2 {
+	font-size: 1.2em;
+	margin: 12px;
+}
+
+#details-reviews-data {
+	overflow: auto;
+	margin: 10px;
+}
+
+#close-details {
+	position: absolute;
+	top:5%;
+	right: 5%;
 }
