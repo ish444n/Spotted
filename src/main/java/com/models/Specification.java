@@ -1,3 +1,5 @@
+package com.models;
+
 public class Specification {
     private int SpecID;
     private int waterFountains;

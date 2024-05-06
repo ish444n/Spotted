@@ -1,9 +1,11 @@
 package com.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.models.*;
 import com.models.Image;
-
 
 // class to retrieve and update user profiles - including bio and other details
 @WebServlet("/user")
@@ -60,7 +61,7 @@ public class UserProfile extends HttpServlet {
         
         // get user info and check if it matches login
         try {
-	        conn = StudySpotsDAO.getConnection();
+	        conn = SpottedDriver.getConnection();
 	        
 	        // build statement to get user info
 	        String userSql = "SELECT * FROM UserTable WHERE UserID = ?";
@@ -77,7 +78,8 @@ public class UserProfile extends HttpServlet {
 	        	String bio = rs.getString("Bio");
 	        	
 	        	// we know user exists so now lets get their bookmarked spots
-	        	List<StudySpot> bookmarked = StudySpotsDAO.getUserBookmarked(userid);
+	        	// List<StudySpot> bookmarked = StudySpotsDAO.getUserBookmarked(userid); -- not sure why this randomly stopped working
+	        	List<StudySpot> bookmarked = new ArrayList<>();
 	        	
 	        	// create the user object
 	        	user = new User(Integer.parseInt(userid), username, email, password, bio, bookmarked);

@@ -1,3 +1,5 @@
+package com.models;
+
 import java.util.Map;
 
 // Needs a recommendationService class

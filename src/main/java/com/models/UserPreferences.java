@@ -1,4 +1,4 @@
-
+package com.models;
 
 public class UserPreferences {
     private int userId;

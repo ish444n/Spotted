@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,17 +22,19 @@ public class SignUpServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String bio = request.getParameter("bio");
+        
+        System.out.println("made it to servlet");
+        System.out.println("Email : " + email);
+        System.out.println("username : " + username);
+        System.out.println("password : " + password);
 
         // setup jdbc vars
-        Connection conn = null;
         PreparedStatement checkStmt = null;
         PreparedStatement insertStmt = null;
         ResultSet rs = null;
         
-        try {
+        try(Connection conn = SpottedDriver.getConnection();){
         	// get connection
-            conn = StudySpotsDAO.getConnection();
             conn.setAutoCommit(false); // start transaction
             
             // check if the username or email is already in use
@@ -46,12 +50,11 @@ public class SignUpServlet extends HttpServlet {
 	            response.getWriter().write("Username or email already in use.");
             } else {
                 // insert new user into the table
-                String insertSql = "INSERT INTO UserTable (Username, Email, Password, Bio) VALUES (?, ?, ?, ?)";
+                String insertSql = "INSERT INTO UserTable (Username, Email, Password) VALUES (?, ?, ?)";
                 insertStmt = conn.prepareStatement(insertSql);
                 insertStmt.setString(1, username);
                 insertStmt.setString(2, email);
                 insertStmt.setString(3, password);
-                insertStmt.setString(4, bio);
 
                 // send success / failure back to the client
                 int rowsAffected = insertStmt.executeUpdate();
@@ -67,19 +70,13 @@ public class SignUpServlet extends HttpServlet {
     	            response.getWriter().write("Registration error");
                 }
             }
-        } catch (Exception e) {
-        	try {
-                if (conn != null) conn.rollback(); // Ensure rollback on exception
-            } catch (Exception rollbackEx) {
-                e.addSuppressed(rollbackEx);
-            }
-            throw new ServletException("Registration error", e);
+        } catch (SQLException sqle) {
+        	System.out.println("SQLE in signup: " + sqle.getMessage());
         } finally {
             // close resources
             try { if (rs != null) rs.close(); } catch (Exception e) { e.printStackTrace(); }
             try { if (checkStmt != null) checkStmt.close(); } catch (Exception e) { e.printStackTrace(); }
             try { if (insertStmt != null) insertStmt.close(); } catch (Exception e) { e.printStackTrace(); }
-            try { if (conn != null) conn.close(); } catch (Exception e) { e.printStackTrace(); }
         }
     }
 }
