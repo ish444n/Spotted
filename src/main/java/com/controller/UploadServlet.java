@@ -1,5 +1,11 @@
 package com.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.IOException;
-import java.io.File;
 
 @WebServlet("/UploadServlet")
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
@@ -45,13 +49,61 @@ public class UploadServlet extends HttpServlet {
             fileSaveDir.mkdir();
         }
 
-        for (Part part : request.getParts()) {
-            String fileName = extractFileName(part);
-            // refines the fileName in case it is an absolute path
-            fileName = new File(fileName).getName();
-            part.write(savePath + File.separator + fileName);
-            System.out.println("fileName: " +fileName );
+//        for (Part part : request.getParts()) {
+//            String fileName = extractFileName(part);
+//            // refines the fileName in case it is an absolute path
+//            fileName = new File(fileName).getName();
+//            part.write(savePath + File.separator + fileName);
+//            System.out.println("fileName: " +fileName );
+//        }
+
+        
+        // set JDBC vars
+        PreparedStatement uploadStmt = null;
+        
+        // put into DB
+        try {
+        	// get connection
+        	Connection conn = SpottedDriver.getConnection();
+            conn.setAutoCommit(false); // start transaction
+        	
+          for (Part part : request.getParts()) {
+	          String fileName = extractFileName(part);
+	          // refines the fileName in case it is an absolute path
+	          fileName = new File(fileName).getName();
+	          part.write(savePath + File.separator + fileName);
+	          System.out.println("fileName: " +fileName );
+	          
+	          //database stuff
+	          String sql = "INSERT INTO ImagesTable VALUES (ImageID, LocationID, ImagePath) VALUES (?, ?, ?)";
+	          uploadStmt = conn.prepareStatement(sql);
+	          uploadStmt.setInt(1, 100000); //test
+	          uploadStmt.setInt(2, 200000); //test
+	          uploadStmt.setString(3, fileName);
+	          
+	          // send success / failure back to the client
+	          int rowsAffected = uploadStmt.executeUpdate();
+	          if (rowsAffected > 0) {
+	        	  // upload went well
+	        	  conn.commit(); // commit the transaction
+	        	  response.setStatus(HttpServletResponse.SC_OK);    
+				  response.getWriter().write("Upload successful");
+	          } else {
+	        	  // upload failed -- send unauthorized and undo changes
+	        	  conn.rollback();
+	        	  response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);    
+	        	  response.getWriter().write("Upload error");
+	          }
+	          
+          }
+            
+        } catch (SQLException sqle) {
+        	System.out.println("SQLE in upload: " + sqle.getMessage());
+        } finally {
+            // close resources
+            try { if (uploadStmt != null) uploadStmt.close(); } catch (Exception e) { e.printStackTrace(); }
         }
+        
 
         response.getWriter().print("Upload has been done successfully!");
     }
