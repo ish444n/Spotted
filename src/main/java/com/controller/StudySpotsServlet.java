@@ -38,7 +38,7 @@ public class StudySpotsServlet extends HttpServlet {
 		}
 	}
 
-	private StudySpot fetchStudySpot(int spotId) throws SQLException {
+	protected static StudySpot fetchStudySpot(int spotId) throws SQLException {
 		StudySpot spot = null;
 		try (Connection conn = DriverManager.getConnection(DB_URL);
 				PreparedStatement ps = conn.prepareStatement("SELECT * FROM StudySpotsTable WHERE LocationID = ?")) {
