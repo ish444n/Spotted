@@ -44,7 +44,6 @@ function submitCreate(event) {
 	
 	const form = document.getElementById('create-form');
     const formData = new FormData(form); 
-
     appendCheckboxToFormData(formData, 'waterFountains');
     appendCheckboxToFormData(formData, 'restrooms');
     appendCheckboxToFormData(formData, 'microwaves');
@@ -52,12 +51,14 @@ function submitCreate(event) {
     appendCheckboxToFormData(formData, 'outlets');
     appendCheckboxToFormData(formData, 'ac');
     appendCheckboxToFormData(formData, 'wifi');
-    
     console.log(formData);
 
-    fetch('upload', {
+    const fileInput = document.getElementById('create-upload'); //grab just the image
+    const imageData = new FormData(); 
+    imageData.append('uploadImage', fileInput.files[0], fileInput.files[0].name);
+    fetch('/Spotted/UploadServlet', {
         method: 'POST',
-        body: formData
+        body: imageData
     })
     .then(response => response.text())
     .then(data => {
