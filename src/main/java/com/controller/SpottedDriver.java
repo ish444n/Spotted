@@ -16,8 +16,8 @@ public class SpottedDriver {
 	
 	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/StudySpots?useSSL=false&allowPublicKeyRetrieval=true";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "root";
-
+	//private static final String PASSWORD = "root";
+	private static final String PASSWORD = "VN990422";
 	// returns the database connection
 	public static Connection getConnection() {
 	    try {

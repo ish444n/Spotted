@@ -8,12 +8,10 @@ async function initMap() {
   const position = { lat: 34.022, lng: -118.285 };
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     map = new Map(document.getElementById("map"), {
     	zoom: 17,
     	center: position,
-    	mapId: 'ed0e7eaf4b296b17',
 	});
 	map.setOptions({ styles: styles});
 	
@@ -76,31 +74,44 @@ async function submitCreate(event) {
     console.log(imageData);
 	console.log(formData);
 
-    //another fetch that sends form data to add spot servlet
-
-	// clear form 
-	
-	// close page
+    //another call that sends form data to add spot servlet
+    //have servlet return the location/spot id into this var 
+    var locationid = -1;
+    
 	
 	// add spot on map
+    var spotInfoWindow = new google.maps.InfoWindow({
+		  content: `<p onclick='openStudySpot(${locationid})'>${document.getElementById('create-name').value}</p>`
+	});
 	
-    const spotContent = document.createElement("div");
-    spotContent.className = "spot-tag";
-    spotContent.textContent = formData.get("create-name");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const marker = new google.maps.Marker({
+      position: {lat: currLat, long:currLong},
+      map,
+      title: `${document.getElementById('create-name').value}`,
+      label: `S`,
+      optimized: false,
+    });
 
-	const newMarker = new AdvancedMarkerElement({
-	    map,
-	    position: { lat: currLat, lng: currLong},
-	    content: spotContent,
-	  });
-
+	marker.addListener("click", () => {
+      spotInfoWindow.close();
+      spotInfoWindow.setContent(marker.getTitle());
+      spotInfoWindow.open(marker.getMap(), marker);
+    });
+    
+    // clear form 
+	form.reset(); 
+	// close page
+	document.getElementById('create-container').style= 'display:none;';
 }
 
 // helper function
 function appendCheckboxToFormData(formData, checkboxName) {
 	const checkbox = document.getElementById('create-' + checkboxName);
     formData.append(checkboxName, checkbox.checked ? 'yes' : 'no');
+}
+
+function openStudySpot(locationid){
+	
 }
   
   

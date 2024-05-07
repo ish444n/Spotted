@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.models.*;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.models.StudySpot;
 
-public class StudySpotsServlet extends HttpServlet {
+public class BookMarkedSpotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/StudySpots?user=root&password=root";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -23,14 +22,14 @@ public class StudySpotsServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if (action != null && action.equals("fetch")) {
-			int spotId = Integer.parseInt(request.getParameter("id"));
+			int userId = Integer.parseInt(request.getParameter("id"));
 			try {
-				StudySpot spot = fetchStudySpot(spotId);
-				String json = new Gson().toJson(spot);
+				List<StudySpot> spots = fetchBookmarkedSpotsForUser(userId);
+				String json = new Gson().toJson(spots);
 				response.getWriter().write(json);
 			} catch (SQLException e) {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().write("Error fetching study spot: " + e.getMessage());
+				response.getWriter().write("Error fetching bookmarked study spots: " + e.getMessage());
 			}
 		} else {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -38,33 +37,34 @@ public class StudySpotsServlet extends HttpServlet {
 		}
 	}
 
-	protected static StudySpot fetchStudySpot(int spotId) throws SQLException {
-		StudySpot spot = null;
+	private List<StudySpot> fetchBookmarkedSpotsForUser(int userId) throws SQLException {
+		List<StudySpot> spots = new ArrayList<>();;
 		try (Connection conn = DriverManager.getConnection(DB_URL);
-				PreparedStatement ps = conn.prepareStatement("SELECT * FROM StudySpotsTable WHERE LocationID = ?")) {
-			ps.setInt(1, spotId);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM BookmarkedSpotsTable WHERE UserID = ?")) {
+			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
-				int locationID = rs.getInt("LocationID");
+			while (rs.next()) {
+				int StudySpotID = rs.getInt("StudySpotID");
 				String name = rs.getString("Name");
 				String description = rs.getString("Description");
 
-				Specification specs = fetchSpecification(conn, rs.getInt("SpecID"));
-				List<Review> reviews = fetchReviews(conn, locationID);
-				List<Image> pictures = fetchImages(conn, locationID);
+				Specification specs = StudySpotsServlet.fetchSpecification(conn, rs.getInt("SpecID"));
+				List<Review> reviews = StudySpotsServlet.fetchReviews(conn, StudySpotID);
+				List<Image> pictures = StudySpotsServlet.fetchImages(conn, StudySpotID);
 
-				spot = new StudySpot(locationID, name, description, specs, reviews, pictures);
+				spots.add(new StudySpot(StudySpotID, name, description, specs, reviews, pictures));
 			}
-			return spot;
+		
+			return spots;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-
-	//changed to public static for bookmarked spots servlet
-	public static Specification fetchSpecification(Connection conn, int specId) throws SQLException {
+/*
+	private Specification fetchSpecification(Connection conn, int specId) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM SpecsTable WHERE SpecID = ?");
 		ps.setInt(1, specId);
 		ResultSet rs = ps.executeQuery();
@@ -77,8 +77,7 @@ public class StudySpotsServlet extends HttpServlet {
 		return null;
 	}
 
-	//changed to public static for bookmarked spots servlet
-	public static List<Review> fetchReviews(Connection conn, int locationID) throws SQLException {
+	private List<Review> fetchReviews(Connection conn, int locationID) throws SQLException {
 		List<Review> reviews = new ArrayList<>();
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM ReviewTable WHERE LocationID = ?");
 		ps.setInt(1, locationID);
@@ -89,9 +88,8 @@ public class StudySpotsServlet extends HttpServlet {
 		}
 		return reviews;
 	}
-	
-	//changed to public static for bookmarked spots servlet
-	public static List<Image> fetchImages(Connection conn, int locationID) throws SQLException {
+
+	private List<Image> fetchImages(Connection conn, int locationID) throws SQLException {
 		List<Image> images = new ArrayList<>();
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM ImagesTable WHERE LocationID = ?");
 		ps.setInt(1, locationID);
@@ -110,6 +108,6 @@ public class StudySpotsServlet extends HttpServlet {
 			throw new ServletException("JDBC Driver not found: " + e.getMessage());
 		}
 	}
-
+*/
 // Optional: Implement doPost if you need to handle POST requests
 }
