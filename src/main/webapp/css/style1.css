@@ -19,7 +19,6 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: black;
 }
 
 header, footer {
@@ -115,7 +114,105 @@ header {
 	text-decoration: none;
 }
 
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ CREATE   ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+ 
+ #create-container {
+	z-index: 2;
+	position: absolute;
+    top: 70px;
+    left: 20%;
+    width: 80%;
+    height: 90%;
+    background: wheat;
+    padding: 60px;
+    overflow: auto;
+ }
+ 
+ #create-header {
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: 520;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+#close-create {
+	position: absolute;
+    top: 5%;
+    right: 5%;
+}
+
+#create-form > label {
+	font-size: 1.2em;
+}
+#create-fieldset > * {
+	font-size: 1.2em;
+}
+#create-fieldset > label {
+	margin-top: 5px;
+}
+#create-form > textarea{
+	background-color: cornsilk;
+	width: 1031px; height: 122px;
+}
+#create-name{
+	background-color: cornsilk;
+	width: 10vw;
+	font-size: 1.2em;
+	width: 20vw;
+	margin-bottom: 5px;
+}
+#create-fieldset {
+	padding: revert;
+	padding-left: 5vw;
+}
+#create-fieldset > legend {
+	margin-left: -3vw;
+}
+#create-details{
+	
+}
+.create-checkbox{
+	margin-top: 5px;
+	width: 1em;
+    height: 1em;
+    background-color: cornsilk;
+    accent-color: var(--primary);
+}
+#create-seatingCapacity{
+	margin-top: 5px;
+	background-color: cornsilk;
+
+}
+#create-noiseLevel{
+	margin-top: 5px;
+	background-color: cornsilk;
+
+}
+#create-hours{
+	margin-top: 5px;
+	margin-bottom: 2px;
+	background-color: cornsilk;
+}
+#create-submit{
+	margin-top: 10px;
+	width: 8vw;
+	height: 2vw;
+	background-color: cornsilk;
+}
+
+
+
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ DETAILS  ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+ 
 #details-container {
+	z-index: 3;
 	position: absolute;
     top: 70px;
     left: 20%;

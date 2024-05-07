@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (isLoggedIn) {
         navbar.innerHTML = `
+            <a id = "profile">Profile</a> 
             <a href="index1.html" id = "logout">Logout</a>
         `;
         document.getElementById('logout').addEventListener('click', function () {
@@ -18,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     document.getElementById('close-details').addEventListener('click', function () {
 		document.getElementById('details-container').style='visibility:hidden;';
+    });
+    document.getElementById('close-create').addEventListener('click', function () {
+		document.getElementById('create-container').style='visibility:hidden;';
     });
     
     document.getElementById('search-field').addEventListener('input', function (e) {

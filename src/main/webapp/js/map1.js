@@ -1,20 +1,39 @@
-// Initialize and add the map
 let map;
+let openInfoWindow = null; // currently open InfoWindow
+
 
 async function initMap() {
-  // The location of Uluru
   const position = { lat: 34.022, lng: -118.285 };
-  // Request needed libraries.
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
 
-  	// The map, centered at Uluru
     map = new Map(document.getElementById("map"), {
     	zoom: 17,
     	center: position,
 	});
 	map.setOptions({ styles: styles});
+	
+    map.addListener('click', function(e) {
+	    if (openInfoWindow) {
+	        openInfoWindow.close();
+	    }
+	    var lat = e.latLng.lat();
+	    var lng = e.latLng.lng();
+	    console.log('Latitude: ' + lat + ', Longitude: ' + lng);
+	
+	    var infoWindow = new google.maps.InfoWindow({
+	        content: `<p onclick='createStudySpot(${lat},${lng})'>Add Study Spot</p>`
+	    });
+	    infoWindow.setPosition(e.latLng);
+	    infoWindow.open(map);
+	    openInfoWindow = infoWindow;
 
+	});
+}
+
+function createStudySpot(lat, long){
+	document.getElementById('create-container').style = 'visibility: visible;';
+	
 }
   
   
