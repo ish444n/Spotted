@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
     document.getElementById('search-field').addEventListener('input', function (e) {
     	const query = e.target.value;
-    	fetchStudySpots(query);
+    	const sortBy = document.getElementById('sort-dropdown').value;
+    	fetchStudySpots(query, sortBy);
 	});
 	
 	document.getElementById('sort-dropdown').addEventListener('change', function (e) {
@@ -34,14 +35,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	    fetchStudySpots(document.getElementById('search-field').value, sortBy);
 	});
 	
+	// fetches the list of all study spots with a given name, sorted by newest or alphabetical
 	function fetchStudySpots(query, sortBy = 'alphabetical') {
 	    const params = new URLSearchParams({ query, sortBy });
-	    fetch('/studyspots?' + params.toString())
-	        .then((response) => response.json())
-	        .then((data) => {
+	    fetch('/Spotted/Search?' + params.toString())
+	        .then(response => {
+            // check if the server responded with an error
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+            }
+            
+            // convert the response to json
+            return response.json();
+	        })
+	        .then(data => {
+	            // handle the parsed data
 	            updateStudySpotResults(data);
 	        })
-	        .catch((error) => console.error('Error fetching study spots:', error));
+	        .catch(error => {
+	            console.error('Error fetching study spots:', error);
+	        });
 	}
 	
 	function updateStudySpotResults(studySpots) {
