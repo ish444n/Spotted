@@ -36,14 +36,11 @@ public class UploadServlet extends HttpServlet {
 
         
         String savePath = extractedPath + SAVE_DIR;
-        
-        System.out.println("appPath: " +appPath + "\n savePath: " +savePath);
-
 
         // creates save directory if it doesnt exists
         File fileSaveDir = new File(savePath);
         
-        System.out.println("appPath: " +appPath + "savePath: " +savePath );
+        System.out.println("appPath: " +appPath + "\nsavePath: " +savePath );
         if (!fileSaveDir.exists()) {
             fileSaveDir.mkdir();
         }

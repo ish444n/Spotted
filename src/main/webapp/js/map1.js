@@ -8,12 +8,17 @@ async function initMap() {
   const position = { lat: 34.022, lng: -118.285 };
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     map = new Map(document.getElementById("map"), {
     	zoom: 17,
     	center: position,
+    	mapId: 'ed0e7eaf4b296b17',
 	});
 	map.setOptions({ styles: styles});
+	
+	//populate map here
+	//for loop from fetched data from servlet / db
 	
     map.addListener('click', function(e) {
 	    if (openInfoWindow) {
@@ -39,9 +44,9 @@ function createStudySpot(lat, long){
 	currLong = long;
 }
 
-function submitCreate(event) {
+async function submitCreate(event) {
 	event.preventDefault();
-	
+
 	const form = document.getElementById('create-form');
     const formData = new FormData(form); 
     appendCheckboxToFormData(formData, 'waterFountains');
@@ -51,11 +56,11 @@ function submitCreate(event) {
     appendCheckboxToFormData(formData, 'outlets');
     appendCheckboxToFormData(formData, 'ac');
     appendCheckboxToFormData(formData, 'wifi');
-    console.log(formData);
 
     const fileInput = document.getElementById('create-upload'); //grab just the image
     const imageData = new FormData(); 
     imageData.append('uploadImage', fileInput.files[0], fileInput.files[0].name);
+    
     fetch('/Spotted/UploadServlet', {
         method: 'POST',
         body: imageData
@@ -68,9 +73,27 @@ function submitCreate(event) {
         console.error('Error uploading image:', error);
     });
     
-    
+    console.log(imageData);
+	console.log(formData);
+
     //another fetch that sends form data to add spot servlet
 
+	// clear form 
+	
+	// close page
+	
+	// add spot on map
+	
+    const spotContent = document.createElement("div");
+    spotContent.className = "spot-tag";
+    spotContent.textContent = formData.get("create-name");
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+	const newMarker = new AdvancedMarkerElement({
+	    map,
+	    position: { lat: currLat, lng: currLong},
+	    content: spotContent,
+	  });
 
 }
 
