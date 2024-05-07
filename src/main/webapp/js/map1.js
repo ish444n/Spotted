@@ -1,5 +1,7 @@
 let map;
 let openInfoWindow = null; // currently open InfoWindow
+let currLat;
+let currLong;
 
 
 async function initMap() {
@@ -33,7 +35,48 @@ async function initMap() {
 
 function createStudySpot(lat, long){
 	document.getElementById('create-container').style = 'visibility: visible;';
+	currLat= lat;
+	currLong = long;
+}
+
+function submitCreate(event) {
+	event.preventDefault();
 	
+	const form = document.getElementById('create-form');
+    const formData = new FormData(form); 
+
+    appendCheckboxToFormData(formData, 'waterFountains');
+    appendCheckboxToFormData(formData, 'restrooms');
+    appendCheckboxToFormData(formData, 'microwaves');
+    appendCheckboxToFormData(formData, 'refrigerators');
+    appendCheckboxToFormData(formData, 'outlets');
+    appendCheckboxToFormData(formData, 'ac');
+    appendCheckboxToFormData(formData, 'wifi');
+    
+    console.log(formData);
+
+    fetch('upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Image upload successful:', data);
+    })
+    .catch(error => {
+        console.error('Error uploading image:', error);
+    });
+    
+    
+    //another fetch that sends form data to add spot servlet
+
+
+}
+
+// helper function
+function appendCheckboxToFormData(formData, checkboxName) {
+	const checkbox = document.getElementById('create-' + checkboxName);
+    formData.append(checkboxName, checkbox.checked ? 'yes' : 'no');
 }
   
   

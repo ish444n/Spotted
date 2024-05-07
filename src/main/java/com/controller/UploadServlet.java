@@ -1,78 +1,57 @@
 package com.controller;
 
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.File;
 
+@WebServlet("/upload")
+@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
+                 maxFileSize=1024*1024*10,      // 10MB
+                 maxRequestSize=1024*1024*50)   // 50MB
 public class UploadServlet extends HttpServlet {
-    private static final String UPLOAD_DIRECTORY = "/webapp/assets";
+
+    private static final long serialVersionUID = 1L;
+	private static final String SAVE_DIR = "uploadFiles";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // checks if the request actually contains upload file
-        if (!ServletFileUpload.isMultipartContent(request)) {
-            throw new ServletException("Content type is not multipart/form-data");
+        // gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
         }
 
-        // configures upload settings
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-
-        // constructs the directory path to store upload file
-        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
-
-        // creates the directory if it does not exist
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            // refines the fileName in case it is an absolute path
+            fileName = new File(fileName).getName();
+            part.write(savePath + File.separator + fileName);
         }
 
-        try {
-            List<FileItem> formItems = upload.parseRequest(request);
-
-            if (formItems != null && formItems.size() > 0) {
-                // iterates over form's fields
-                for (FileItem item : formItems) {
-                    // processes only fields that are not form fields (i.e., the file field)
-                    if (!item.isFormField()) {
-                        String fileName = new File(item.getName()).getName();
-                        String filePath = uploadPath + File.separator + fileName;
-                        File storeFile = new File(filePath);
-
-                        // saves the file on disk
-                        item.write(storeFile);
-
-                        // Here you might want to store the filePath in your database
-                        saveImagePathInDatabase(filePath);
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            request.setAttribute("message", "There was an error: " + ex.getMessage());
-        }
-        // redirects to the message page
-        getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+        response.getWriter().print("Upload has been done successfully!");
     }
 
-    private void saveImagePathInDatabase(String filePath) {
-        // Here you should write code to save the file path in your database.
-        // Example:
-        // Connection connection = null;
-        // PreparedStatement statement = null;
-        // try {
-        //     connection = dataSource.getConnection();
-        //     statement = connection.prepareStatement("INSERT INTO ImagesTable (ImagePath) VALUES (?)");
-        //     statement.setString(1, filePath);
-        //     statement.executeUpdate();
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        // } finally {
-        //     if (statement != null) statement.close();
-        //     if (connection != null) connection.close();
-        // }
+    /**
+     * Extracts file name from HTTP header content-disposition
+     */
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length()-1);
+            }
+        }
+        return "";
     }
 }
