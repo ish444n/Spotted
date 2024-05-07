@@ -111,5 +111,4 @@ public class StudySpotsServlet extends HttpServlet {
 		}
 	}
 
-// Optional: Implement doPost if you need to handle POST requests
 }
