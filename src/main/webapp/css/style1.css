@@ -112,6 +112,7 @@ header {
 #navs a{
 	color: var(--secondary);
 	text-decoration: none;
+	margin-right: 15px;
 }
 
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
