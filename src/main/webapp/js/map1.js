@@ -1,7 +1,7 @@
 let map;
 let openInfoWindow = null; // currently open InfoWindow
-let currLat;
-let currLong;
+let currLat = 0.0;
+let currLong = 0.0;
 
 
 async function initMap() {
@@ -22,12 +22,12 @@ async function initMap() {
 	    if (openInfoWindow) {
 	        openInfoWindow.close();
 	    }
-	    var lat = e.latLng.lat();
-	    var lng = e.latLng.lng();
-	    console.log('Latitude: ' + lat + ', Longitude: ' + lng);
-	
+
+	    currLat= e.latLng.lat();
+		currLong = e.latLng.lng();
+	    
 	    var infoWindow = new google.maps.InfoWindow({
-	        content: `<p onclick='createStudySpot(${lat},${lng})'>Add Study Spot</p>`
+	        content: `<p onclick='createStudySpot()'>Add Study Spot</p>`
 	    });
 	    infoWindow.setPosition(e.latLng);
 	    infoWindow.open(map);
@@ -36,10 +36,9 @@ async function initMap() {
 	});
 }
 
-function createStudySpot(lat, long){
+function createStudySpot(){
 	document.getElementById('create-container').style = 'visibility: visible;';
-	currLat= lat;
-	currLong = long;
+	
 }
 
 async function submitCreate(event) {
@@ -55,8 +54,16 @@ async function submitCreate(event) {
     appendCheckboxToFormData(formData, 'ac');
     appendCheckboxToFormData(formData, 'wifi');
 
-    const fileInput = document.getElementById('create-upload'); //grab just the image
+    //another call that sends form data to add spot servlet
+    //have servlet return the location/spot id into this var 
+    var locationid = -1;
+    
+    
+    
+    //grab just the image
+    const fileInput = document.getElementById('create-upload'); 
     const imageData = new FormData(); 
+    imageData.append("locationid",locationid);
     imageData.append('uploadImage', fileInput.files[0], fileInput.files[0].name);
     
     fetch('/Spotted/UploadServlet', {
@@ -71,21 +78,18 @@ async function submitCreate(event) {
         console.error('Error uploading image:', error);
     });
     
-    console.log(imageData);
-	console.log(formData);
-
-    //another call that sends form data to add spot servlet
-    //have servlet return the location/spot id into this var 
-    var locationid = -1;
-    
 	
+	console.log("lat: "+currLat+ " lng: "+currLong);
+	console.log(currLat);
+	console.log(currLong);
+
 	// add spot on map
     var spotInfoWindow = new google.maps.InfoWindow({
 		  content: `<p onclick='openStudySpot(${locationid})'>${document.getElementById('create-name').value}</p>`
 	});
-	
+	var pos = {lat:parseFloat(currLat), lng:parseFloat(currLong) };
     const marker = new google.maps.Marker({
-      position: {lat: currLat, long:currLong},
+      position: pos,
       map,
       title: `${document.getElementById('create-name').value}`,
       label: `S`,
@@ -96,6 +100,10 @@ async function submitCreate(event) {
       spotInfoWindow.close();
       spotInfoWindow.setContent(marker.getTitle());
       spotInfoWindow.open(marker.getMap(), marker);
+    });
+    
+    spotInfoWindow.addListener("click", () => {
+      
     });
     
     // clear form 
