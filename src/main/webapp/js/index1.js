@@ -14,6 +14,9 @@
         document.getElementById('profile').addEventListener('click', function () {
             showProfile();
         });
+        document.getElementById('save-details').addEventListener('click', function () {
+            bookmarkSpot(userID);
+        });
 
     } else {
         navbar.innerHTML = `
@@ -143,6 +146,8 @@
 		// fill the header
 		document.getElementById("details-header-name").innerHTML = spot.Name;
 
+		document.getElementById("details-header-name").innerHTML = spot.name;
+		
 		// fill picture
 		const imagePath = await getImage(spot.ImagesID);
 		if(imagePath) {
@@ -154,14 +159,28 @@
 		// set description
 		document.getElementById("details-description").innerText = spot.Description;
 
+		document.getElementById("details-description").innerText = spot.description;
+		
 		// fill the specs
 		const labelDiv = document.getElementById("details-specs-c1");
 		const specsDiv = document.getElementById("details-specs-c2");
+		const specsJson = spot.specs;
+		
 		specsDiv.innerHTML = ``;
-		for(let spec in labelDiv) {
+		
+		for(let spec in specsJson) {
 			// create child
 			let paragraph = document.createElement("p");
 			paragraph.innerText = spot.specs[`${spec.innerText}`];
+
+			
+			if(specsJson[spec] === "true") {
+				paragraph.innerText = "Yes";
+			} else if (specsJson[spec] === "false") {
+				paragraph.innerText = "No";
+			} else {
+				paragraph.innerText = specsJson[spec];
+			}
 
 			// add to specs
 			specsDiv.appendChild(paragraph);
