@@ -86,20 +86,28 @@ document.addEventListener('DOMContentLoaded', function () {
 	        return;
 	    }
 	
-	    // Construct the URL with the userId query parameter
 	    const url = `/Spotted/UserProfile?userId=${encodeURIComponent(userId)}`;
 	
-	    // Fetch the user profile data
 	    fetch(url)
 	    .then(response => {
 	        if (!response.ok) {
 	            throw new Error('Failed to fetch user profile. Status: ' + response.status);
 	        }
-	        return response.json(); // Parse JSON data from response
+	        return response.json(); 
 	    })
 	    .then(userProfile => {
-	        console.log('User Profile:', userProfile);
-	        // Perform actions with the user profile data
+	        document.getElementById("profile-name").textContent='Hi, '+userProfile.username + '!';
+	        let bookDiv = document.getElementById("profile-bookmarks");
+	        for(spot in userProfile.bookmarkedSpots){
+				let temp = document.createElement("div");
+				temp.appendChild(document.createElement("hr"));
+				let bookbody = document.createElement("p");
+				bookbody.onclick=displayDetails(event, spot);
+				temp.appendChild(bookbody);
+				temp.appendChild(document.createElement("hr"));
+				bookDiv.appendChild(temp);
+			}
+	        
 	    })
 	    .catch(error => {
 	        console.error('Error fetching user profile:', error);
@@ -107,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	}
 	
-		async function getImage(imageID) {
+	async function getImage(imageID) {
 		const url = new URL('/Spotted/Image');
 	    url.searchParams.append('ImageID', imageID);
 	

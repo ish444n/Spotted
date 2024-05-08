@@ -45,7 +45,7 @@
 	<script src="../js/map1.js"></script>
 	<script src="../js/index1.js"></script>
 	
-	<div id="profile-container">
+	<div id="profile-container" style="display: none;">
 		<span id="close-profile">Close</span>
 		<h2 id="profile-name">Hi, [null]!</h2>
 		<div id="profile-bookmarks">
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	
-	<div id="create-container">
+	<div id="create-container" style="display: none;">
 		<span id="close-create">Close</span>
 		<div id="create-header">Create New Study Spot</div>
 		<form id="create-form">
@@ -96,7 +96,7 @@
 	</div>
 	
 	
-	<div id="details-container" style="visibility: hidden;">
+	<div id="details-container" style="visibility: visible;">
 		<!-- DELETE AFTER POPULATED -->
 		<span id="close-details">Close</span>
 		<div id="details-header">
@@ -149,6 +149,7 @@
 			</div>
 			<div id="details-reviews">
 				<h2>Reviews</h2>
+				<button type="button" id="details-add-review-button">Write your thoughts!</button>
 				<div id="details-reviews-data"></div> <!-- fetch data to go in here -->
 			</div>
 		</div>
