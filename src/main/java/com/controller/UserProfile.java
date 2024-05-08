@@ -18,7 +18,7 @@ import com.models.*;
 import com.models.Image;
 
 // class to retrieve and update user profiles - including bio and other details
-@WebServlet("/user")
+@WebServlet("/UserProfile")
 public class UserProfile extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

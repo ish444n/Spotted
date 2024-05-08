@@ -135,6 +135,15 @@ header {
 	top:5%;
 	right: 5%;
 }
+#profile-bookmarks-data{
+	width: 80%;
+	height: 60vh;
+	margin: auto;
+	overflow:auto;
+	border: 0.5px var(--primary-oof) solid;
+	padding: 5px;
+    margin-top: 20px;
+}
 
 
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */

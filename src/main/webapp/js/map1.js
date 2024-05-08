@@ -54,7 +54,7 @@ async function submitCreate(event) {
     appendCheckboxToFormData(formData, 'ac');
     appendCheckboxToFormData(formData, 'wifi');
 
-    //another call that sends form data to add spot servlet
+    //call that sends form data to add spot servlet
     //have servlet return the location/spot id into this var 
     var locationid = -1;
     

@@ -132,10 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		const userID = await funcLogin(username, password);
 		console.log(`userid is ${userID}`)
 		
+		
 		// handle failed login
 		if (userID == null) {
 			return;
 		}
+		
 		
 		// handle login success & redirect home
 		localStorage.setItem('isLoggedIn', 'true'); 
