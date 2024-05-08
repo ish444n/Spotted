@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
 	const navbar = document.getElementById('navs');
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	    studySpots.forEach((spot) => {
 	        const spotElement = document.createElement('div');
-	        spotElement.innerHTML = `<hr><h3>${spot.name} - ${spot.rating}★</h3>`;
+	        spotElement.innerHTML = `<hr><h3 onclick="display-Details(event, ${spot})">${spot.name} - ${spot.rating}★</h3>`;
 	        spotElement.style = 'margin-top:10px;';
 	        
 	        container.appendChild(spotElement);
@@ -156,13 +156,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			specsDiv.appendChild(paragraph);
 		}
 		
-		const reviews = fetchReviews();
+		const reviews = spot.reviews;
 		document.getElementById("details-reviews-data") = reviews;
-		
+		for(review in reviews) {
+			const review = document.createElement("p");
+			review.innerText = review.details;
+			reviews.appendChild(review);
+		}
 		
 		// make the page visible
 		document.getElementById('profile-container').style='visibility:visible;';
 	}
 });
-
-
