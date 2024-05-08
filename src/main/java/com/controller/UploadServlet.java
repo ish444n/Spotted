@@ -78,7 +78,7 @@ public class UploadServlet extends HttpServlet {
 	          //database stuff
 	          String sql = "INSERT INTO ImagesTable VALUES (LocationID, ImagePath) VALUES (?, ?)";
 	          uploadStmt = conn.prepareStatement(sql);
-	          uploadStmt.setInt(1, request.getParameter("locationid"));
+	          uploadStmt.setInt(1, Integer.parseInt(request.getParameter("locationid")));
 	          uploadStmt.setString(2, fileName);
 	          
 	          // send success / failure back to the client

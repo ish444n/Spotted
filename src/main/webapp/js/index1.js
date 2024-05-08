@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('close-create').addEventListener('click', function () {
 		document.getElementById('create-container').style='visibility:hidden;';
     });
+    document.getElementById('close-profile').addEventListener('click', function () {
+		document.getElementById('profile-container').style='visibility:hidden;';
+    });
     
     document.getElementById('search-field').addEventListener('input', function (e) {
     	const query = e.target.value;

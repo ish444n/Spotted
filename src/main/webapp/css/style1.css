@@ -114,6 +114,22 @@ header {
 	text-decoration: none;
 	margin-right: 15px;
 }
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ PROFILE  ~~~~ ~~~~ ~~~~ ~~~~ */
+ /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
+
+ #profile-container {
+	z-index: 3;
+	position: absolute;
+    top: 70px;
+    left: 20%;
+    width: 80%;
+    height: 90%;
+    background: wheat;
+    padding: 60px;
+    overflow: auto;
+ }
+
 
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
  /* ~~~~ ~~~~ ~~~~ ~~~~ CREATE   ~~~~ ~~~~ ~~~~ ~~~~ */
@@ -213,7 +229,7 @@ header {
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
  
 #details-container {
-	z-index: 3;
+	z-index: 4;
 	position: absolute;
     top: 70px;
     left: 20%;
