@@ -85,9 +85,9 @@ public class UploadSpotService extends HttpServlet {
 		String SeatingCapacity = request.getParameter("seatingCapacity");
 		seatingC = Integer.parseInt(SeatingCapacity);
 		String noiseLevel = request.getParameter("noiseLevel");
-		String openingHours = request.getParameter("hours");
+		
 	    try (PreparedStatement ps = conn.prepareStatement(
-	            "INSERT INTO SpecsTable (waterFountain, restroom, Microwaves, refrigerators, outlets, ac, WiFi, SeatingCapacity, noiseLevel, openingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+	            "INSERT INTO SpecsTable (waterFountain, restroom, Microwaves, refrigerators, outlets, ac, WiFi, SeatingCapacity, noiseLevel) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 	            PreparedStatement.RETURN_GENERATED_KEYS)) {
 	        
 	        ps.setBoolean(1, if_waterFountain);
@@ -99,7 +99,6 @@ public class UploadSpotService extends HttpServlet {
 	        ps.setBoolean(7, if_wifi);
 	        ps.setInt(8, seatingC);
 	        ps.setString(9, noiseLevel);
-	        ps.setString(10, openingHours);
 	        ps.executeUpdate();
 
 	        try (ResultSet rs = ps.getGeneratedKeys()) {
