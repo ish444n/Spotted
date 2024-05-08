@@ -78,14 +78,14 @@ public class UploadSpotService extends HttpServlet {
 			if_ac = true;
 		}
 	
-		String WiFi = request.getParameter("WiFi");
+		String WiFi = request.getParameter("wifi");
 		if(WiFi.equals("yes")) {
 			if_wifi = true;
 		}
-		String SeatingCapacity = request.getParameter("SeatingCapacity");
+		String SeatingCapacity = request.getParameter("seatingCapacity");
 		seatingC = Integer.parseInt(SeatingCapacity);
 		String noiseLevel = request.getParameter("noiseLevel");
-		String openingHours = request.getParameter("openingHours");
+		String openingHours = request.getParameter("hours");
 	    try (PreparedStatement ps = conn.prepareStatement(
 	            "INSERT INTO SpecsTable (waterFountain, restroom, Microwaves, refrigerators, outlets, ac, WiFi, SeatingCapacity, noiseLevel, openingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 	            PreparedStatement.RETURN_GENERATED_KEYS)) {
