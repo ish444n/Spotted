@@ -103,7 +103,26 @@ async function submitCreate(event) {
     });
     
     spotInfoWindow.addListener("click", () => {
-      
+		var q = document.getElementById('create-name').value;
+		var p = 'newest' ;
+	    const params = new URLSearchParams({ q, p});
+	    fetch('/Spotted/Search?' + params.toString())
+	        .then(response => {
+            // check if the server responded with an error
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+            }
+
+            // convert the response to json
+            return response.json();
+	        })
+	        .then(data => {
+	            displayDetails(data[0]);
+	        })
+	        .catch(error => {
+	            console.error('Error fetching study spots:', error);
+	        });
+    	
     });
     
     // clear form 
@@ -121,6 +140,48 @@ function appendCheckboxToFormData(formData, checkboxName) {
 function openStudySpot(locationid){
 	
 }
+
+async function displayDetails(spot) {
+	console.log(spot);
+	// fill the header
+	document.getElementById("details-header-name").innerHTML = spot.Name;
+
+	// fill picture
+	const imagePath = await getImage(spot.ImagesID);
+	if(imagePath) {
+		document.getElementById("details-pictures").innerHTML = `
+			<img src="${imagePath}" alt="Image of ${spot.Name}">
+			`;
+	}
+
+	// set description
+	document.getElementById("details-description").innerText = spot.Description;
+
+	// fill the specs
+	const labelDiv = document.getElementById("details-specs-c1");
+	const specsDiv = document.getElementById("details-specs-c2");
+	specsDiv.innerHTML = ``;
+	for(let spec in labelDiv) {
+		// create child
+		let paragraph = document.createElement("p");
+		paragraph.innerText = spot.specs[`${spec.innerText}`];
+
+		// add to specs
+		specsDiv.appendChild(paragraph);
+	}
+
+	const reviewsJson = spot.reviews;
+	const reviews = document.getElementById("details-reviews-data");
+	for(let review in reviewsJson) {
+		const reviewP = document.createElement("p");
+		reviewP.innerText = review.details;
+		reviews.appendChild(review);
+	}
+
+	// make the page visible
+	document.getElementById('details-container').style='visibility:visible;';
+}
+
   
   
 const styles = [

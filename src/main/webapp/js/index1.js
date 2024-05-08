@@ -80,7 +80,7 @@
 	        container.appendChild(spotElement);
 	    });
 	}
-
+	
 	function showProfile(){
 		document.getElementById('profile-container').style='visibility: visible;';
 		    const userId = localStorage.getItem('userId');

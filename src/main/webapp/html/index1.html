@@ -88,8 +88,6 @@
 	                <option value="medium">Medium</option>
 	                <option value="high">High</option>
 	            </select><br>
-	            <label for="hours">Hours:</label>
-	            <input type="text" id="create-hours" name="hours"><br>
 	        </fieldset>
 	        <button type="submit" id="create-submit" onclick="submitCreate(event)">Submit</button>
 	    </form>
@@ -98,10 +96,12 @@
 	
 	<div id="details-container" style="visibility: visible;">
 		<!-- DELETE AFTER POPULATED -->
+		
 		<span id="close-details">Close</span>
+		<span id="save-details">Save</span>
+
 		<div id="details-header">
 			<h2 id="details-header-name">LOCATION NAME</h2>
-			<h3>★</h3>
 		</div>
 		<div id="details-pictures">
 			<div id="details-pictures-scroll-container">

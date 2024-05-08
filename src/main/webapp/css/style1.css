@@ -354,8 +354,10 @@ header {
 
 #details-add-review-button{
 	margin-top: 10px;
-	width: 8vw;
-	height: 2vw;
+	align-self: last baseline;
+	margin-right: 10px;
+	width: 15vw;
+	height: 6vh;
 	background-color: cornsilk;
 
 }
@@ -364,4 +366,9 @@ header {
 	position: absolute;
 	top:5%;
 	right: 5%;
+}
+#save-details {
+	position: absolute;
+	top:5%;
+	right: 12%;
 }
