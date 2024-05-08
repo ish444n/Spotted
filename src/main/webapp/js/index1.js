@@ -4,13 +4,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (isLoggedIn) {
         navbar.innerHTML = `
-            <a id = "profile">Profile</a> 
+            <a id = "profile" >Profile</a> 
             <a href="index1.html" id = "logout">Logout</a>
         `;
         document.getElementById('logout').addEventListener('click', function () {
             localStorage.clear();
             window.location.href = "index1.html";
         });
+        document.getElementById('profile').addEventListener('click', function () {
+            showProfile();
+        });
+        
     } else {
         navbar.innerHTML = `
             <a href="login1.html">Login / Sign Up</a>
@@ -72,6 +76,37 @@ document.addEventListener('DOMContentLoaded', function () {
 	        container.appendChild(spotElement);
 	    });
 	}
+	
+	function showProfile(){
+		document.getElementById('profile-container').style='visibility: visible;';
+		    const userId = localStorage.getItem('userId');
+    
+	    if (!userId) {
+	        console.error('No user ID found in local storage.');
+	        return;
+	    }
+	
+	    // Construct the URL with the userId query parameter
+	    const url = `/Spotted/UserProfile?userId=${encodeURIComponent(userId)}`;
+	
+	    // Fetch the user profile data
+	    fetch(url)
+	    .then(response => {
+	        if (!response.ok) {
+	            throw new Error('Failed to fetch user profile. Status: ' + response.status);
+	        }
+	        return response.json(); // Parse JSON data from response
+	    })
+	    .then(userProfile => {
+	        console.log('User Profile:', userProfile);
+	        // Perform actions with the user profile data
+	    })
+	    .catch(error => {
+	        console.error('Error fetching user profile:', error);
+	    });
+
+	}
+	
 	
 });
 
