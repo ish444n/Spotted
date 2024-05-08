@@ -78,7 +78,7 @@ public class UploadSpotService extends HttpServlet {
 			if_ac = true;
 		}
 	
-		String WiFi = request.getParameter("WiFi");
+		String WiFi = request.getParameter("wifi");
 		if(WiFi.equals("yes")) {
 			if_wifi = true;
 		}
