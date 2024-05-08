@@ -57,7 +57,7 @@ public class UploadServlet extends HttpServlet {
 //            System.out.println("fileName: " +fileName );
 //        }
 
-        
+
         // set JDBC vars
         PreparedStatement uploadStmt = null;
         
@@ -74,12 +74,12 @@ public class UploadServlet extends HttpServlet {
 	          part.write(savePath + File.separator + fileName);
 	          System.out.println("fileName: " +fileName );
 	          
+	          
 	          //database stuff
-	          String sql = "INSERT INTO ImagesTable VALUES (ImageID, LocationID, ImagePath) VALUES (?, ?, ?)";
+	          String sql = "INSERT INTO ImagesTable VALUES (LocationID, ImagePath) VALUES (?, ?)";
 	          uploadStmt = conn.prepareStatement(sql);
-	          uploadStmt.setInt(1, 100000); //test
-	          uploadStmt.setInt(2, 200000); //test
-	          uploadStmt.setString(3, fileName);
+	          uploadStmt.setInt(1, 1);
+	          uploadStmt.setString(2, fileName);
 	          
 	          // send success / failure back to the client
 	          int rowsAffected = uploadStmt.executeUpdate();
@@ -94,7 +94,6 @@ public class UploadServlet extends HttpServlet {
 	        	  response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);    
 	        	  response.getWriter().write("Upload error");
 	          }
-	          
           }
             
         } catch (SQLException sqle) {
