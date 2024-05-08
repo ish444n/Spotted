@@ -9,14 +9,18 @@ public class StudySpot {
     private Specification specs;
     private List<Review> reviews;
     private List<Image> pictures;
+    private double latitude;
+    private double longitude;
     
-    public StudySpot(int LocationID, String name, String description, Specification specs, List<Review> reviews, List<Image> pictures) {
+    public StudySpot(int LocationID, String name, String description, Specification specs, List<Review> reviews, List<Image> pictures, double latitude, double longitude) {
         this.LocationID = LocationID;
     	this.name = name;
         this.description = description;
         this.specs = specs;
         this.reviews = reviews;
         this.pictures = pictures;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     
     public int getLocationID() {
@@ -42,6 +46,22 @@ public class StudySpot {
     public List<Image> getPictures() {
         return pictures;
     }
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 
 
 }
