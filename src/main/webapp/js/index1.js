@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
 	const navbar = document.getElementById('navs');
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
@@ -70,8 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	    studySpots.forEach((spot) => {
 	        const spotElement = document.createElement('div');
-	        spotElement.innerHTML = `<hr><h3>${spot.name} - ${spot.rating}★</h3>`;
+	        spotElement.innerHTML = `<hr><h3 id="$listing-{spot.name}">${spot.name} - ${spot.rating}★</h3>`;
 	        spotElement.style = 'margin-top:10px;';
+	        
+	        spotElement.addEventListener('click', function () {
+            	displayDetails(spot);
+        	});
 	        
 	        container.appendChild(spotElement);
 	    });
@@ -107,8 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	}
 	
-		async function getImage(imageID) {
-		const url = new URL('/Spotted/Image');
+	async function getImage(imageID) {
+		const url = new URL('http://localhost:8080/Spotted/Image');
 	    url.searchParams.append('ImageID', imageID);
 	
 	    try {
@@ -126,9 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	    }
 	}
 	
-	async function displayDetails(event, spot) {
-		event.preventDefault();
-		
+	async function displayDetails(spot) {
+		console.log(spot);
 		// fill the header
 		document.getElementById("details-header-name").innerHTML = spot.Name;
 		
@@ -156,13 +159,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			specsDiv.appendChild(paragraph);
 		}
 		
-		const reviews = fetchReviews();
+		const reviews = spot.reviews;
 		document.getElementById("details-reviews-data") = reviews;
-		
+		for(review in reviews) {
+			const review = document.createElement("p");
+			review.innerText = review.details;
+			reviews.appendChild(review);
+		}
 		
 		// make the page visible
 		document.getElementById('profile-container').style='visibility:visible;';
 	}
 });
-
-
