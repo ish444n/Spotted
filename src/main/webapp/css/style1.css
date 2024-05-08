@@ -129,6 +129,12 @@ header {
     padding: 60px;
     overflow: auto;
  }
+ 
+ #close-profile {
+	position: absolute;
+	top:5%;
+	right: 5%;
+}
 
 
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */

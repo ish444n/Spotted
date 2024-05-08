@@ -102,6 +102,10 @@ async function submitCreate(event) {
       spotInfoWindow.open(marker.getMap(), marker);
     });
     
+    spotInfoWindow.addListener("click", () => {
+      
+    });
+    
     // clear form 
 	form.reset(); 
 	// close page
