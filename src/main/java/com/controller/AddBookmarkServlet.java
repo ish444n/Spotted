@@ -48,7 +48,7 @@ public class AddBookmarkServlet extends HttpServlet {
 			
 			// set the parameters in the prepared statement
             checkStmt.setString(1, userID);
-            checkStmt.setString(2, userID);
+            checkStmt.setString(2, locationID);
 
             // execute and check existence
             ResultSet rs = checkStmt.executeQuery();

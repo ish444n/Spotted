@@ -15,7 +15,7 @@
             showProfile();
         });
         document.getElementById('save-details').addEventListener('click', function () {
-            bookmarkSpot(userID);
+            bookmarkSpot();
         });
 
     } else {
@@ -44,6 +44,41 @@
 	    const sortBy = e.target.value;
 	    fetchStudySpots(document.getElementById('search-field').value, sortBy);
 	});
+	
+	function bookmarkSpot(LocationID) {
+		const userID = localStorage.getItem("userId");
+		const spot = fetchStudySpots(document.getElementById("details-header-name").value, "alphabetical")
+		
+		// Construct the request options
+		const requestOptions = {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded',
+		  },
+		  body: `userID=${userID}&LocationID=${LocationID}`
+		};
+		
+		// Define the URL to the servlet
+		const url = '/Spotted/AddBookmark';
+		
+		// Make the fetch request to the servlet
+		fetch(url, requestOptions)
+		  .then(response => {
+		    if (!response.ok) {
+				alert("Failed to save!");
+		      throw new Error('Network response was not ok');
+		    }
+		    return response.text();
+		  })
+		  .then(result => {
+			alert("Saved Successfully!");
+		    console.log('Response from server:', result);
+		  })
+		  .catch(error => {
+		    console.error('Failed to fetch:', error);
+		  });
+
+	}
 
 	// fetches the list of all study spots with a given name, sorted by newest or alphabetical
 	function fetchStudySpots(query, sortBy = 'alphabetical') {
@@ -193,8 +228,13 @@
 			reviewP.innerText = review.details;
 			reviews.appendChild(review);
 		}
+		
+		document.getElementById('save-details').addEventListener('click', function () {
+            bookmarkSpot(spot.LocationID);
+        });
 
 		// make the page visible
 		document.getElementById('details-container').style='visibility:visible;';
+		
 	}
 });
