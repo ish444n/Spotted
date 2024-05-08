@@ -143,8 +143,13 @@ header {
 	border: 0.5px var(--primary-oof) solid;
 	padding: 5px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
+#profile-bookmarks-data > *{
+	margin-top: 5px;
+}
 
  /* ~~~~ ~~~~ ~~~~ ~~~~ ~~~~~~~~ ~~~~ ~~~~ ~~~~ ~~~~ */
  /* ~~~~ ~~~~ ~~~~ ~~~~ CREATE   ~~~~ ~~~~ ~~~~ ~~~~ */
@@ -345,6 +350,14 @@ header {
 #details-reviews-data {
 	overflow: auto;
 	margin: 10px;
+}
+
+#details-add-review-button{
+	margin-top: 10px;
+	width: 8vw;
+	height: 2vw;
+	background-color: cornsilk;
+
 }
 
 #close-details {
