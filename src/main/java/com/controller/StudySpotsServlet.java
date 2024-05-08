@@ -69,10 +69,9 @@ public class StudySpotsServlet extends HttpServlet {
 		ps.setInt(1, specId);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new Specification(rs.getBoolean("specID"), rs.getBoolean("waterFountain"), rs.getBoolean("restroom"),
+			return new Specification(rs.getInt("specID"), rs.getBoolean("waterFountain"), rs.getBoolean("restroom"),
 					rs.getBoolean("microwaves"), rs.getBoolean("refrigerators"), rs.getBoolean("outlets"), rs.getBoolean("ac"),
-					rs.getBoolean("WiFi"), rs.getInt("SeatingCapacity"), rs.getString("noiseLevel"),
-					rs.getString("openingHours"));
+					rs.getBoolean("WiFi"), rs.getInt("SeatingCapacity"), rs.getString("noiseLevel"));
 		}
 		return null;
 	}
