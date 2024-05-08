@@ -107,7 +107,62 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	}
 	
+		async function getImage(imageID) {
+		const url = new URL('/Spotted/Image');
+	    url.searchParams.append('ImageID', imageID);
 	
+	    try {
+	        const response = await fetch(url);
+	        if (response.ok) {
+	            return await response.text();
+	        } else if (response.status === 302) {
+	            throw new Error('Image not found!');
+	        } else {
+	            throw new Error('An error occurred while fetching the image path');
+	        }
+	    } catch (error) {
+	        console.error('Error:', error.message);
+	        return null;
+	    }
+	}
+	
+	async function displayDetails(event, spot) {
+		event.preventDefault();
+		
+		// fill the header
+		document.getElementById("details-header-name").innerHTML = spot.Name;
+		
+		// fill picture
+		const imagePath = await getImage(spot.ImagesID);
+		if(imagePath) {
+			document.getElementById("details-pictures").innerHTML = `
+				<img src="${imagePath}" alt="Image of ${spot.Name}">
+				`;
+		}
+		
+		// set description
+		document.getElementById("details-description").innerText = spot.Description;
+		
+		// fill the specs
+		const labelDiv = document.getElementById("details-specs-c1");
+		const specsDiv = document.getElementById("details-specs-c2");
+		specsDiv.innerHTML = ``;
+		for(let spec in labelDiv) {
+			// create child
+			let paragraph = document.createElement("p");
+			paragraph.innerText = spot.specs[`${spec.innerText}`];
+			
+			// add to specs
+			specsDiv.appendChild(paragraph);
+		}
+		
+		const reviews = fetchReviews();
+		document.getElementById("details-reviews-data") = reviews;
+		
+		
+		// make the page visible
+		document.getElementById('profile-container').style='visibility:visible;';
+	}
 });
 
 
