@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 import com.models.StudySpot;
+import com.models.Image;
 
 public class StudySpotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,12 +48,13 @@ public class StudySpotsServlet extends HttpServlet {
 				int locationID = rs.getInt("LocationID");
 				String name = rs.getString("Name");
 				String description = rs.getString("Description");
-
+				int longitude = rs.getInt("Latitude");
+				int latitude = rs.getInt("Longitude");
 				Specification specs = fetchSpecification(conn, rs.getInt("SpecID"));
 				List<Review> reviews = fetchReviews(conn, locationID);
 				List<Image> pictures = fetchImages(conn, locationID);
 
-				spot = new StudySpot(locationID, name, description, specs, reviews, pictures);
+				spot = new StudySpot(locationID, name, description, specs, reviews, pictures, latitude, longitude);
 			}
 			return spot;
 		} catch (SQLException e) {

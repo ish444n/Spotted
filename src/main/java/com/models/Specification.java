@@ -1,20 +1,20 @@
 package com.models;
 
 public class Specification {
-    private int SpecID;
-    private int waterFountains;
-    private int restrooms;
-    private int microwaves;
-    private int refrigerators;
-    private int outlets;
-    private int AC;
-    private int WiFi;
+    private boolean SpecID;
+    private boolean waterFountains;
+    private boolean restrooms;
+    private boolean microwaves;
+    private boolean refrigerators;
+    private boolean outlets;
+    private boolean AC;
+    private boolean WiFi;
     private int SeatingCapacity;
-    private int noiseLevel; 
+    private String noiseLevel; 
     private String openingHours;
 
-    public Specification(int SpecID, int waterFountains, int restrooms, int microwaves, int refrigerators, 
-                int outlets, int AC, int WiFi, int SeatingCapacity, int noiseLevel, String openingHours) {
+    public Specification(boolean SpecID, boolean waterFountains, boolean restrooms, boolean microwaves, boolean refrigerators, 
+    		boolean outlets, boolean AC, boolean WiFi, int SeatingCapacity, String noiseLevel, String openingHours) {
         this.SpecID = SpecID;
         this.waterFountains = waterFountains;
         this.restrooms = restrooms;
@@ -29,35 +29,35 @@ public class Specification {
     }
 
     // Getters
-    public int getSpecID() {
+    public boolean getSpecID() {
         return SpecID;
     }
 
-    public int getWaterFountains() {
+    public boolean getWaterFountains() {
         return waterFountains;
     }
 
-    public int getRestrooms() {
+    public boolean getRestrooms() {
         return restrooms;
     }
 
-    public int getMicrowaves() {
+    public boolean getMicrowaves() {
         return microwaves;
     }
 
-    public int getRefrigerators() {
+    public boolean getRefrigerators() {
         return refrigerators;
     }
 
-    public int getOutlets() {
+    public boolean getOutlets() {
         return outlets;
     }
 
-    public int getAc() {
+    public boolean getAc() {
         return AC;
     }
 
-    public int getWiFi() {
+    public boolean getWiFi() {
         return WiFi;
     }
 
@@ -65,7 +65,7 @@ public class Specification {
         return SeatingCapacity;
     }
 
-    public int getNoiseLevel() {
+    public String getNoiseLevel() {
         return noiseLevel;
     }
 
