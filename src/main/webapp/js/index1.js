@@ -91,7 +91,13 @@
 	    }
 
 	    const url = `/Spotted/UserProfile?userId=${encodeURIComponent(userId)}`;
+<<<<<<< HEAD
 
+=======
+	    
+	
+	    // Fetch the user profile data
+>>>>>>> cc18299 (Profile work)
 	    fetch(url)
 	    .then(response => {
 	        if (!response.ok) {
@@ -100,6 +106,7 @@
 	        return response.json();
 	    })
 	    .then(userProfile => {
+<<<<<<< HEAD
 	        document.getElementById("profile-name").textContent='Hi, '+userProfile.username + '!';
 	        let bookDiv = document.getElementById("profile-bookmarks");
 	        for(spot in userProfile.bookmarkedSpots){
@@ -112,13 +119,52 @@
 				bookDiv.appendChild(temp);
 			}
 
+=======
+	        console.log('User Profile:', userProfile);
+	        document.getElementById("profile-name").innerText = `Hi, ${userProfile.username}`;
+	        fillBookmarks(userProfile.userID);
+>>>>>>> cc18299 (Profile work)
 	    })
 	    .catch(error => {
 	        console.error('Error fetching user profile:', error);
 	    });
 
 	}
+<<<<<<< HEAD
 
+=======
+	
+	function fillBookmarks(userID) {
+		const action = 'fetch';
+		
+		// Construct the URL with query parameters
+		const url = `http://localhost:8080/Spotted/Bookmarks?id=${userID}`;
+		
+		// Make the fetch request to the servlet
+		fetch(url)
+		  .then(response => {
+		    if (!response.ok) {
+		      throw new Error('Network response was not ok');
+		    }
+		    return response.json();
+		  })
+		  .then(data => {
+		    const bookdiv = document.getElementById("profile-bookmarks-data");
+			for(let bookmark in data) {
+				const bookmarkelement = document.createElement("div");
+				bookmarkelement.innerHTML = `
+					<h3>${bookmark.name}</h3> <br>
+					<p>${bookmark.description}</p>
+				`
+				bookdiv.appendChild(bookmarkelement);
+			}
+		  })
+		  .catch(error => {
+		    console.error('Failed to fetch:', error);
+		  });
+	}
+	
+>>>>>>> cc18299 (Profile work)
 	async function getImage(imageID) {
 		const url = new URL('http://localhost:8080/Spotted/Image');
 	    url.searchParams.append('ImageID', imageID);
@@ -141,8 +187,13 @@
 	async function displayDetails(spot) {
 		console.log(spot);
 		// fill the header
+<<<<<<< HEAD
 		document.getElementById("details-header-name").innerHTML = spot.Name;
 
+=======
+		document.getElementById("details-header-name").innerHTML = spot.name;
+		
+>>>>>>> cc18299 (Profile work)
 		// fill picture
 		const imagePath = await getImage(spot.ImagesID);
 		if(imagePath) {
@@ -152,17 +203,37 @@
 		}
 
 		// set description
+<<<<<<< HEAD
 		document.getElementById("details-description").innerText = spot.Description;
 
+=======
+		document.getElementById("details-description").innerText = spot.description;
+		
+>>>>>>> cc18299 (Profile work)
 		// fill the specs
 		const labelDiv = document.getElementById("details-specs-c1");
 		const specsDiv = document.getElementById("details-specs-c2");
+		const specsJson = spot.specs;
+		
 		specsDiv.innerHTML = ``;
-		for(let spec in labelDiv) {
+		
+		for(let spec in specsJson) {
 			// create child
 			let paragraph = document.createElement("p");
+<<<<<<< HEAD
 			paragraph.innerText = spot.specs[`${spec.innerText}`];
 
+=======
+			
+			if(specsJson[spec] === "true") {
+				paragraph.innerText = "Yes";
+			} else if (specsJson[spec] === "false") {
+				paragraph.innerText = "No";
+			} else {
+				paragraph.innerText = specsJson[spec];
+			}
+			
+>>>>>>> cc18299 (Profile work)
 			// add to specs
 			specsDiv.appendChild(paragraph);
 		}

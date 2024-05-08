@@ -2,6 +2,7 @@ package com.controller;
 
 import com.models.*;
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
@@ -10,6 +11,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.models.StudySpot;
 import com.models.Image;
+
+@WebServlet("/Bookmarks")
 public class BookMarkedSpotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
