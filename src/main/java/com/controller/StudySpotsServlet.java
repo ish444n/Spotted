@@ -13,8 +13,6 @@ import com.models.StudySpot;
 
 public class StudySpotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/StudySpots?user=root&password=root";
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +38,7 @@ public class StudySpotsServlet extends HttpServlet {
 
 	protected static StudySpot fetchStudySpot(int spotId) throws SQLException {
 		StudySpot spot = null;
-		try (Connection conn = DriverManager.getConnection(DB_URL);
+		try (Connection conn = SpottedDriver.getConnection();
 				PreparedStatement ps = conn.prepareStatement("SELECT * FROM StudySpotsTable WHERE LocationID = ?")) {
 			ps.setInt(1, spotId);
 			ResultSet rs = ps.executeQuery();
@@ -69,9 +67,9 @@ public class StudySpotsServlet extends HttpServlet {
 		ps.setInt(1, specId);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new Specification(rs.getInt("SpecID"), rs.getInt("waterFountains"), rs.getInt("restrooms"),
-					rs.getInt("microwaves"), rs.getInt("refrigerators"), rs.getInt("outlets"), rs.getInt("AC"),
-					rs.getInt("WiFi"), rs.getInt("SeatingCapacity"), rs.getInt("noiseLevel"),
+			return new Specification(rs.getBoolean("specID"), rs.getBoolean("waterFountain"), rs.getBoolean("restroom"),
+					rs.getBoolean("microwaves"), rs.getBoolean("refrigerators"), rs.getBoolean("outlets"), rs.getBoolean("ac"),
+					rs.getBoolean("WiFi"), rs.getInt("SeatingCapacity"), rs.getString("noiseLevel"),
 					rs.getString("openingHours"));
 		}
 		return null;
@@ -85,7 +83,7 @@ public class StudySpotsServlet extends HttpServlet {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			reviews.add(new Review(rs.getInt("reviewID"), rs.getInt("userID"), rs.getInt("locationID"),
-					rs.getDouble("starRating"), rs.getString("details")));
+					rs.getString("details")));
 		}
 		return reviews;
 	}
@@ -100,15 +98,6 @@ public class StudySpotsServlet extends HttpServlet {
 			images.add(new Image(rs.getString("ImagePath"), rs.getInt("ImageID"), rs.getInt("LocationID")));
 		}
 		return images;
-	}
-
-	@Override
-	public void init() throws ServletException {
-		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			throw new ServletException("JDBC Driver not found: " + e.getMessage());
-		}
 	}
 
 }
