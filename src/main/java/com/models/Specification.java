@@ -1,7 +1,7 @@
 package com.models;
 
 public class Specification {
-    private boolean SpecID;
+    private int SpecID;
     private boolean waterFountains;
     private boolean restrooms;
     private boolean microwaves;
@@ -11,10 +11,9 @@ public class Specification {
     private boolean WiFi;
     private int SeatingCapacity;
     private String noiseLevel; 
-    private String openingHours;
 
-    public Specification(boolean SpecID, boolean waterFountains, boolean restrooms, boolean microwaves, boolean refrigerators, 
-    		boolean outlets, boolean AC, boolean WiFi, int SeatingCapacity, String noiseLevel, String openingHours) {
+    public Specification(int SpecID, boolean waterFountains, boolean restrooms, boolean microwaves, boolean refrigerators, 
+    		boolean outlets, boolean AC, boolean WiFi, int SeatingCapacity, String noiseLevel) {
         this.SpecID = SpecID;
         this.waterFountains = waterFountains;
         this.restrooms = restrooms;
@@ -25,39 +24,38 @@ public class Specification {
         this.WiFi = WiFi;
         this.SeatingCapacity = SeatingCapacity;
         this.noiseLevel = noiseLevel; 
-        this.openingHours = openingHours;
     }
 
-    // Getters
-    public boolean getSpecID() {
+ // Corrected boolean getters
+    public int getSpecID() {
         return SpecID;
     }
 
-    public boolean getWaterFountains() {
+    public boolean hasWaterFountains() {
         return waterFountains;
     }
 
-    public boolean getRestrooms() {
+    public boolean hasRestrooms() {
         return restrooms;
     }
 
-    public boolean getMicrowaves() {
+    public boolean hasMicrowaves() {
         return microwaves;
     }
 
-    public boolean getRefrigerators() {
+    public boolean hasRefrigerators() {
         return refrigerators;
     }
 
-    public boolean getOutlets() {
+    public boolean hasOutlets() {
         return outlets;
     }
 
-    public boolean getAc() {
+    public boolean hasAC() {
         return AC;
     }
 
-    public boolean getWiFi() {
+    public boolean hasWiFi() {
         return WiFi;
     }
 
@@ -69,8 +67,4 @@ public class Specification {
         return noiseLevel;
     }
 
-    public String getOpeningHours() {
-        return openingHours;
-    }
 }
-

@@ -159,15 +159,15 @@
 			specsDiv.appendChild(paragraph);
 		}
 		
-		const reviews = spot.reviews;
-		document.getElementById("details-reviews-data") = reviews;
-		for(review in reviews) {
-			const review = document.createElement("p");
-			review.innerText = review.details;
+		const reviewsJson = spot.reviews;
+		const reviews = document.getElementById("details-reviews-data");
+		for(let review in reviewsJson) {
+			const reviewP = document.createElement("p");
+			reviewP.innerText = review.details;
 			reviews.appendChild(review);
 		}
 		
 		// make the page visible
-		document.getElementById('profile-container').style='visibility:visible;';
+		document.getElementById('details-container').style='visibility:visible;';
 	}
 });
