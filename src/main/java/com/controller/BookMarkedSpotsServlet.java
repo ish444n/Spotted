@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 import com.models.StudySpot;
-
+import com.models.Image;
 public class BookMarkedSpotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,12 +47,13 @@ public class BookMarkedSpotsServlet extends HttpServlet {
 				int StudySpotID = rs.getInt("StudySpotID");
 				String name = rs.getString("Name");
 				String description = rs.getString("Description");
-
+				int longitude = rs.getInt("Latitude");
+				int latitude = rs.getInt("Longitude");
 				Specification specs = StudySpotsServlet.fetchSpecification(conn, rs.getInt("SpecID"));
 				List<Review> reviews = StudySpotsServlet.fetchReviews(conn, StudySpotID);
 				List<Image> pictures = StudySpotsServlet.fetchImages(conn, StudySpotID);
 
-				spots.add(new StudySpot(StudySpotID, name, description, specs, reviews, pictures));
+				spots.add(new StudySpot(StudySpotID, name, description, specs, reviews, pictures, latitude, longitude));
 			}
 		
 			return spots;
